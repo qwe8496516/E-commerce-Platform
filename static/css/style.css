@@ -1,6 +1,6 @@
 body {
     font-family: Roboto;
-    background-color: #ff5100d7;
+    background-color: #8ad4ffd7;   
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,8 +8,11 @@ body {
     height: 700px;
 }
 
-.login {
+
+form {
     background-color: hsl(0, 0%, 100%);
+    border-radius: 10px;
+
     width: 400px;
     color: rgb(0, 0, 0);
     padding: 40px;
@@ -49,4 +52,7 @@ body {
     background-color: #d2d2d2;
     border-color: #d2d2d2;
     transition: 0.25s;
+}
+.error{
+    color: red;
 }

@@ -1,0 +1,8 @@
+body{
+    font-family: Roboto;
+    background-image:linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), url("/static/photo/pexels-vlada-karpovich-4050315.jpg");
+    background-size: 100%;
+    width: 1500px;
+    display: block;
+    height: 700px;
+}

@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv = "Content-Type" content = "text/html"; charset = "UTF-8">
-        <title>登入頁面</title>
-        <link rel = "stylesheet" href = "/static/style.css" />
-    </head>
 
-    <body>
-        <form action = "action.js" class = "login">
-            <h1>Login 登入</h1>
-            <input type = "text" placeholder = "帳號(phone)" />
-            <input type = "password" placeholder = "密碼(password)" />
-            <input type = "submit" value = "登入" />
-        </form>
-    </body>
+<head>
+    <title>登入頁面</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+
+<body>
+    <form class="login" action="/" method="post">
+        <h1>Login 登入</h1>
+        {%if error is defined%}
+        <p class="error">帳號密碼錯誤</p>
+        {%endif%}
+        <input type="text" placeholder="帳號(phone)" name="my_phone" required />
+        <input type="password" placeholder="密碼(password)" name="password" required />
+        <button type="submit">登入</button>
+        <a href="/register/">註冊帳號</a>
+    </form>
+
+
+</body>
+
 </html>

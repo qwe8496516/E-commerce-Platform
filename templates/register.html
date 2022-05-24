@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>註冊帳號</title>
+        <link rel = "stylesheet" href = "/static/css/style.css" />
+    </head>
+        
+    <body>
+        <form action="/register/" method="post">
+			<h1>註冊</h1>
+			<table>
+                <tr>
+					<td><label for="username">姓名 : </label></td>
+					<td><input type="rdt" name="name" id="name" placeholder="請輸入姓名" /><br></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><label for="username">手機號碼(帳號)：</label></td>
+					<td><input type="rdt" name="phone" id="phone" placeholder="請輸入手機號碼" maxlength="10" /><br></td>
+					<td></td>
+				</tr>
+                <tr>
+					<td><label for="username">電子信箱：</label></td>
+					<td><input type="rdt" name="email" id="email" placeholder="請輸入電子信箱" /><br></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><label for="pwd">密&nbsp;&nbsp;&nbsp;碼：</label></td>
+					<td><input type="password" name="password" id="pwd" placeholder="請輸入密碼" /></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><label for="pwd">確認密碼：</label></td>
+					<td><input type="password" name="password_vetify" id="pwd" placeholder="請再次輸入密碼" /></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><label for="pwd">請輸入住址 : </label></td>
+					<td><input type="text" name="address" id="add" placeholder="請輸入住址"/></td>
+					<td></td>
+				</tr>
+				<tr>
+                    <td><label for="pwd">請輸入性別：</label></td>
+                    <td>
+                        <input type="radio" name="gender" value="女"/>女
+    					<input type="radio" name="gender" value="男"/>男
+                    </td>
+                </tr>
+				<tr>
+                    <td></td>
+					<td><br/><input type="submit" value="註冊"></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</form>
+    </body>
+</html>
