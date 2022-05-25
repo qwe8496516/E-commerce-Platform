@@ -6,44 +6,48 @@
     </head>
         
     <body>
+		<a href="/">首頁</a>
         <form action="/register/" method="post">
 			<h1>註冊</h1>
+			{%if error is defined%}
+        		<p class="error">註冊失敗</p>
+        	{%endif%}
 			<table>
                 <tr>
 					<td><label for="username">姓名 : </label></td>
-					<td><input type="rdt" name="name" id="name" placeholder="請輸入姓名" /><br></td>
+					<td><input type="rdt" name="name" id="name" placeholder="請輸入姓名" maxlength="10" required/><br></td>
 					<td></td>
 				</tr>
 				<tr>
-					<td><label for="username">手機號碼(帳號)：</label></td>
-					<td><input type="rdt" name="phone" id="phone" placeholder="請輸入手機號碼" maxlength="10" /><br></td>
+					<td><label for="username">手機號碼(帳號) : </label></td>
+					<td><input type="rdt" name="phone" id="phone" placeholder="請輸入手機號碼" maxlength="10" required/><br></td>
 					<td></td>
 				</tr>
                 <tr>
-					<td><label for="username">電子信箱：</label></td>
-					<td><input type="rdt" name="email" id="email" placeholder="請輸入電子信箱" /><br></td>
+					<td><label for="username">電子信箱 : </label></td>
+					<td><input type="rdt" name="email" id="email" placeholder="請輸入電子信箱" maxlength="50" required/><br></td>
 					<td></td>
 				</tr>
 				<tr>
-					<td><label for="pwd">密&nbsp;&nbsp;&nbsp;碼：</label></td>
-					<td><input type="password" name="password" id="pwd" placeholder="請輸入密碼" /></td>
+					<td><label for="pwd">密碼 : </label></td>
+					<td><input type="password" name="password" id="pwd" placeholder="請輸入密碼" maxlength="20" required/></td>
 					<td></td>
 				</tr>
 				<tr>
-					<td><label for="pwd">確認密碼：</label></td>
-					<td><input type="password" name="password_vetify" id="pwd" placeholder="請再次輸入密碼" /></td>
+					<td><label for="pwd">確認密碼 : </label></td>
+					<td><input type="password" name="password_vetify" id="pwd" placeholder="請再次輸入密碼" maxlength="20" required/></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td><label for="pwd">請輸入住址 : </label></td>
-					<td><input type="text" name="address" id="add" placeholder="請輸入住址"/></td>
+					<td><input type="text" name="address" id="add" placeholder="請輸入住址" maxlength="50" /></td>
 					<td></td>
 				</tr>
 				<tr>
-                    <td><label for="pwd">請輸入性別：</label></td>
+                    <td><label for="pwd">請選擇性別 : </label></td>
                     <td>
-                        <input type="radio" name="gender" value="女"/>G
-    					<input type="radio" name="gender" value="男"/>B
+                        <input type="radio" name="gender" value="G"/>女
+    					<input type="radio" name="gender" value="B"/>男
                     </td>
                 </tr>
 				<tr>

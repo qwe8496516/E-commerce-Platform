@@ -8,6 +8,11 @@ body {
     height: 700px;
 }
 
+label{
+    display:table ;
+    width: 150px;
+    text-align: center;
+}
 
 form {
     background-color: hsl(0, 0%, 100%);

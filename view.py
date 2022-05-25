@@ -79,6 +79,8 @@ def reg():
         checkpassword = request.form.get('password_vetify')
         address = request.form.get('address')
         gender = request.form.get('gender')
+        if(gender == None):
+            gender = ''
         if (password == checkpassword):
             conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
             id = generateId()
@@ -86,23 +88,25 @@ def reg():
             cur = conn.cursor()
             cur.execute(data)
             rows = cur.fetchall()
+    
+            while(rows != []): # 如果不是空值代表重複要重新輸入
+                id = generateId()
+                data = "select m_id from members where m_id = '{}'".format(id)
+                cur = conn.cursor()
+                cur.execute(data)   
+                rows = cur.fetchall()
+                if (rows == []):
+                    break
             if(rows == []):
                 # 可以註冊
-                print('//////////////////////////////////////')
                 data = "Insert into members values('{}','{}','{}','{}','{}','{}','{}');".format(
                     id,name,phone,email,gender,address,password)
-                cur.execute(data)                                                          
-            else:
-                # ID相同
-                while(True):
-                    id = generateId()
-                    data = "select m_id from members where m_id = '{}'".format(id)
-                    cur = conn.cursor()
-                    cur.execute(data)
-                    rows = cur.fetchall()
-                    if (rows == []):
-                        break
+                cur.execute(data)
+                conn.commit()                                                     
             return redirect('/')
+        #密碼不相同
+        else:
+            return render_template("register.html",error=True)
 
 
 
