@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
+        <title>CD庫</title>
+        <link rel="stylesheet" href="/static/css/product.css" />
     </head>
 
     <body>
@@ -9,8 +10,23 @@
         <a href = "/">登出</a>
         <h1>CD庫</h1>
         
-        <form>
-            
-        </form>
+        <table class="producttable" width="500" border="1">
+            <th>賣家名稱</th>
+            <th>CD名稱</th>
+            <th>價格</th>
+            <th>剩餘數量</th>
+            <th>評價</th>
+            <th>商品資料</th>
+            {% for row in info %}
+                <tr>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[4]}}</td>
+                    <td>{{row[5]}}</td>
+                    <td>{{row[6]}}</td>
+                    <td>{{row[7]}}</td>
+                </tr>
+            {% endfor %}
+        </table>
     </body>
 </html>

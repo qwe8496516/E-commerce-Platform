@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>新增商品</title>
+        <link rel="stylesheet" href="/static/css/style.css">
+    </head>
+        
+    <body>
+		<a href = "/home/">首頁</a>
+        <a href = "/">登出</a>
+        <form action="/home/seller/new_product/" method="post">
+            <h2>新增商品</h2>
+			{%if error is defined%}
+        		<p class="error">新增商品失敗</p>
+        	{%endif%}
+            <table>
+                <tr>
+					<td><label for="username">商品名稱 : </label></td>
+					<td><input type="rdt" name="pname" id="name" placeholder="請輸入商品名稱"/><br></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><label for="username">商品價格 : </label></td>
+					<td><input type="rdt" name="pprice" id="phone" placeholder="請輸入商品價格"/><br></td>
+					<td></td>
+				</tr>
+                <tr>
+					<td><label for="username">商品剩餘數量 : </label></td>
+					<td><input type="rdt" name="pnum" id="email" placeholder="請輸入商品剩餘數量"/><br></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><label for="pwd">商品資訊 : </label></td>
+					<td><input type="rdt" name="pinfo" id="pwd" placeholder="請輸入商品資訊"/></td>
+					<td></td>
+				</tr>
+                <tr>
+                    <td><label for="pwd">請選擇商品類型 : </label></td>
+                    <td>
+                        <input type="radio" name="ptype" value="書籍"/>書籍
+    					<input type="radio" name="ptype" value="CD"/>CD
+                    </td>
+                </tr>
+				<tr>
+                    <td></td>
+					<td><br/><input type="submit" value="新增"></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+        </form>
+    </body>
+</html>

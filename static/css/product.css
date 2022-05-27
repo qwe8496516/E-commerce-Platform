@@ -1,0 +1,10 @@
+.producttable {
+    font-family: Roboto;   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1500px;
+    height: 700px;
+    text-align: center;
+    border-collapse: collapse;
+}
