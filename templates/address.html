@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>產生訂單</title>
+        <link rel="stylesheet" href="/static/css/product.css" />
+    </head>
+    
+    <body>
+        <a href = "/home/">首頁</a>
+        <a href = "/">登出</a>
+        <a href = "/home/cart/">購物車</a>
+        <style>
+            .alert{
+                color: red;
+            }
+        </style>
+        <h1>確認訂單</h1>
+        
+        {% if not(add) %}
+            <p class="alert">請輸入住址，以便完成訂單</p>
+        {%endif%}
+
+        <form action = "/home/cart/address/" method = "post">
+            <label>您目前的運送地址: {{add}}<br><br></label>
+            <label>運送地址: </label>
+            <input  type="text" name="address" maxlength="50" placeholder="請輸入要運送到的地址" required/>
+            <button type="submit" name="button" value="address">提交地址</button>
+            <table class="producttable" width="500" border="1">
+                <th>商品名稱</th>
+                <th>價格</th>
+                <th>購買數量</th>
+                {% if info %}
+                    {% for row in info %}
+                        <tr>
+                            <td>{{row[2]}}</td>
+                            <td>{{row[3]}}</td>
+                            <td>{{row[5]}}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                <td>運費</td>
+                <td>100</td>
+                <td>1</td>
+            </table>
+        </form>
+
+        {% if add %}
+            <form action="/home/cart/address/" method="post">
+                <button type="submit" name="button" value="submit" onclick="javascript:return sure();">結帳</button>
+            </form>
+        {% endif %}
+
+        <p>總金額: {{all}}</p>
+
+        <script lang="javascript">
+            function sure(){
+                if(window.confirm("確定提交訂單")){
+                    alert('訂單已提交')
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        </script>
+
+        
+    </body>
+</html>

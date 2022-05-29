@@ -12,10 +12,10 @@
         <a href = "/home/cart/">購物車</a>
         <h1>CD庫</h1>
         
-        {% if info%}
-            <form name="cd" action="/home/customer/cd/" method="post">   
-                <label><br>搜尋CD<input type="text" name="keywords" placeholder="輸入關鍵字查詢相關CD" /></label>
-                <input type="submit" value="搜尋"/>
+        <form name="cd" action="/home/customer/cd/" method="post">   
+            <label><br>搜尋CD<input type="text" name="keywords" placeholder="輸入關鍵字查詢相關CD" /></label>
+            <input type="submit" value="搜尋"/>
+            {% if info%}
                 <table id="mytable" class="producttable" width="500" border="1">
                     <th>賣家名稱</th>
                     <th>CD名稱</th>
@@ -37,8 +37,8 @@
                         </tr>
                     {% endfor %}
                 </table>
-            </form> 
-        {% endif %}
+            {% endif %}
+        </form> 
         
         {% if info == [] %}
             <h3>無相關商品</h3>

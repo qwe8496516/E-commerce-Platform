@@ -13,10 +13,10 @@
         <h1>書庫</h1>
         
 
-        {% if info %}
-            <form name="book" action="/home/customer/book/" method="post">  
-                <label><br>搜尋書籍<input type="text" name="keywords" placeholder="輸入關鍵字查詢相關書籍" /></label>
-                <input type="submit" value="搜尋"/> 
+        <form name="book" action="/home/customer/book/" method="post">  
+            <label><br>搜尋書籍<input type="text" name="keywords" placeholder="輸入關鍵字查詢相關書籍" /></label>
+            <input type="submit" value="搜尋"/> 
+            {% if info %}
                 <table id="mytable" class="producttable" width="500" border="1">
                     <th>賣家名稱</th>
                     <th>書籍名稱</th>
@@ -38,8 +38,8 @@
                         </tr>
                     {% endfor %}
                 </table>
-            </form> 
-        {% endif %}
+            {% endif %}
+        </form>
 
         {% if info == [] %}
             <h3>無相關商品</h3>

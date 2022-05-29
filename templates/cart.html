@@ -6,22 +6,45 @@
     </head>
 
     <body>
-        <a href = "/home/">首頁</a>
-        <a href = "/">登出</a>
-        <h1>購物車</h1>
-        <table class="producttable" width="500" border="1">
-            <th>商品名稱</th>
-            <th>價格</th>
-            <th>購買數量</th>
-            {% if info %}
-                {% for row in info %}
-                    <tr>
-                        <td>{{row[2]}}</td>
-                        <td>{{row[3]}}</td>
-                        <td>{{row[4]}}</td>
-                    </tr>
-                {% endfor %}
-            {% endif %}
-        </table>
+        <form action = "/home/cart/" method = "post">
+            <a href = "/home/">首頁</a>
+            <a href = "/">登出</a>
+            <h1>購物車</h1>
+            <table class="producttable" width="500" border="1">
+                <th>商品名稱</th>
+                <th>價格</th>
+                <th>購買數量</th>
+                {% if info %}
+                    {% for row in info %}
+                        <tr>
+                            <td>{{row[2]}}</td>
+                            <td>{{row[3]}}</td>
+                            <td><input type="number" id="{{row[0]}}" name="{{row[0]}}" min="1" max="{{row[4]}}" step="1" value="{{row[5]}}"></td>
+                            <td><button type="submit" id="{{row[0]}}" name="button" value="{{row[0]}}" onclick="javascript:return del();">刪除</button></td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </table>
+            <button type="submit" name="button" value="update" >儲存更改</button>
+        </form>
+
+        <form action="/home/cart/address/">
+            <button type="submit" name="button" value="submit" >提交訂單</button>
+        </form>
+
+        <p>總金額: {{all}}</p>
+
+
+        <script lang="javascript">
+            function del(){
+                if(window.confirm("您真的確定要刪除嗎？")){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        </script>
+
+        
     </body>
 </html>
