@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <!-- <link rel="stylesheet" href="/static/css/style.css" /> -->
+    </head>
+
+    <body>
+        <h2>我的個人頁面</h2>
+        {% if info %}
+            <table>
+                <label>名稱: </label>
+                <tr>{{info[0][1]}}<br></tr>
+                <label>手機號碼: </label>
+                <tr>{{info[0][2]}}<br></tr>
+                <label>電子信箱: </label>
+                <tr>{{info[0][3]}}<br></tr>
+                <label>住址: </label>
+                <tr>{{info[0][5]}}<br></tr>
+            </table>
+        {% endif %}
+    </body>
+</html>

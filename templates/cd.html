@@ -8,25 +8,45 @@
     <body>
         <a href = "/home/">首頁</a>
         <a href = "/">登出</a>
+        <a href = "/home/customer/">商品頁</a>
+        <a href = "/home/cart/">購物車</a>
         <h1>CD庫</h1>
         
-        <table class="producttable" width="500" border="1">
-            <th>賣家名稱</th>
-            <th>CD名稱</th>
-            <th>價格</th>
-            <th>剩餘數量</th>
-            <th>評價</th>
-            <th>商品資料</th>
-            {% for row in info %}
-                <tr>
-                    <td>{{row[2]}}</td>
-                    <td>{{row[3]}}</td>
-                    <td>{{row[4]}}</td>
-                    <td>{{row[5]}}</td>
-                    <td>{{row[6]}}</td>
-                    <td>{{row[7]}}</td>
-                </tr>
-            {% endfor %}
-        </table>
+        {% if info%}
+            <form name="cd" action="/home/customer/cd/" method="post">   
+                <label><br>搜尋CD<input type="text" name="keywords" placeholder="輸入關鍵字查詢相關CD" /></label>
+                <input type="submit" value="搜尋"/>
+                <table id="mytable" class="producttable" width="500" border="1">
+                    <th>賣家名稱</th>
+                    <th>CD名稱</th>
+                    <th>價格</th>
+                    <th>剩餘數量</th>
+                    <th>評價</th>
+                    <th>商品資料</th>
+                    <th>購買數量</th>
+                    {% for row in info%}
+                        <tr>
+                            <td id="{{row[0]}}" name="seller">{{row[2]}}</td>
+                            <td id="{{row[0]}}" name="pname">{{row[3]}}</td>
+                            <td id="{{row[0]}}" name="pprice">{{row[4]}}</td>
+                            <td id="{{row[0]}}" name="pnum">{{row[5]}}</td>
+                            <td id="{{row[0]}}" name="pstar">{{row[6]}}</td>
+                            <td id="{{row[0]}}" name="pinfo">{{row[7]}}</td>
+                            <td><input type="number" id="{{row[0]}}" name="{{row[0]}}" min="1" max="{{row[5]}}" step="1" value="1"></td>
+                            <td><button type="submit" id="{{row[0]}}" name="button" value="{{row[0]}}">加入購物車</button></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </form> 
+        {% endif %}
+        
+        {% if info == [] %}
+            <h3>無相關商品</h3>
+        {% endif %}
+        <!-- <script type="text/javascript">
+            function add_to_cart(){
+                alert('已將該商品加入購物車!')
+            }
+        </script> -->
     </body>
 </html>

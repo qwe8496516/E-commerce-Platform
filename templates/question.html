@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>問題回報</title>
+        <link rel="stylesheet" href="/static/css/product.css" />
+    </head>
+
+    <body>
+        <a href = "/home/">首頁</a>
+        <a href = "/">登出</a>
+        <h1>問題回報</h1>
+        
+        <form action="/home/question/" method="POST">
+            <label>問題回報 : <br></label>
+            <input type="text" name="question" required/>
+            <input type="submit" value="提交" />
+        </form>
+    </body>
+</html>

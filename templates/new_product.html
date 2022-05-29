@@ -16,29 +16,29 @@
             <table>
                 <tr>
 					<td><label for="username">商品名稱 : </label></td>
-					<td><input type="rdt" name="pname" id="name" placeholder="請輸入商品名稱"/><br></td>
+					<td><input type="rdt" name="pname" id="name" placeholder="請輸入商品名稱" maxlength="50" required/><br></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td><label for="username">商品價格 : </label></td>
-					<td><input type="rdt" name="pprice" id="phone" placeholder="請輸入商品價格"/><br></td>
+					<td><input type="rdt" name="pprice" id="phone" placeholder="請輸入商品價格" required /><br></td>
 					<td></td>
 				</tr>
                 <tr>
 					<td><label for="username">商品剩餘數量 : </label></td>
-					<td><input type="rdt" name="pnum" id="email" placeholder="請輸入商品剩餘數量"/><br></td>
+					<td><input type="rdt" name="pnum" id="email" placeholder="請輸入商品剩餘數量" required /><br></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td><label for="pwd">商品資訊 : </label></td>
-					<td><input type="rdt" name="pinfo" id="pwd" placeholder="請輸入商品資訊"/></td>
+					<td><input type="rdt" name="pinfo" id="pwd" placeholder="請輸入商品資訊" maxlength="200" /></td>
 					<td></td>
 				</tr>
                 <tr>
                     <td><label for="pwd">請選擇商品類型 : </label></td>
                     <td>
-                        <input type="radio" name="ptype" value="書籍"/>書籍
-    					<input type="radio" name="ptype" value="CD"/>CD
+                        <input type="radio" name="ptype" value="書籍" required/>書籍
+    					<input type="radio" name="ptype" value="CD" required/>CD
                     </td>
                 </tr>
 				<tr>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>問題回報區</title>
+        <link rel="stylesheet" href="/static/css/product.css" />
+    </head>
+
+    <body>
+        <a href = "/">登出</a>
+        <h1>問題回報區</h1>
+        <table class="producttable" width="500" border="1">
+            <th>回報人姓名</th>
+            <th>回報問題</th>
+            {% for row in info %}
+            <tr>
+                <td>{{row[0]}}</td>
+                <td>{{row[1]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

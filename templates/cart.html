@@ -2,11 +2,26 @@
 <html>
     <head>
         <title>購物車</title>
+        <link rel="stylesheet" href="/static/css/product.css" />
     </head>
 
     <body>
         <a href = "/home/">首頁</a>
         <a href = "/">登出</a>
         <h1>購物車</h1>
+        <table class="producttable" width="500" border="1">
+            <th>商品名稱</th>
+            <th>價格</th>
+            <th>購買數量</th>
+            {% if info %}
+                {% for row in info %}
+                    <tr>
+                        <td>{{row[2]}}</td>
+                        <td>{{row[3]}}</td>
+                        <td>{{row[4]}}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
     </body>
 </html>
