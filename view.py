@@ -40,10 +40,19 @@ def generateCartId(ch):
         id = random.randint(1111111,9999999)
         id = str(id)
         for i in range(3):
-            start = start + chr(random.randint(ord('A'), ord('Z')))
+            start = chr(random.randint(ord('A'), ord('Z'))) + start
         id = id + start
     return id
 
+
+def generateOrderId():
+    start = ''
+    id = random.randint(111,999)
+    id = str(id)
+    for i in range(7):
+        start = start + chr(random.randint(ord('A'), ord('Z')))
+    id = start + id
+    return id
 
 
 @app.route('/',methods=['GET','POST'])
@@ -150,6 +159,148 @@ def person():
     return render_template('personal.html', info = rows)
 
 
+@app.route('/home/personal/order/',methods=['POST','GET'])
+def order():
+    if(request.method == 'GET'):
+        # 抓取訂單編號
+        conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+        person = session.get('account',None)
+        data = "select DISTINCT(o_id) from orders where c_id = '{}' order by o_id;".format(person[0][0])
+        cur = conn.cursor()
+        cur.execute(data)
+        orderID = cur.fetchall()
+        orderlen = len(orderID)
+        # 抓取訂單的商品資訊
+        conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+        data = "select * from orders where c_id = '{}' AND o_time IN (select max(o_time) from orders);".format(person[0][0])
+        cur = conn.cursor()
+        cur.execute(data)
+        rows = cur.fetchall()
+        sum = 0
+        for row in rows:
+            sum += row[7]*row[8]
+        row = rows[0][10]
+        sum += 100
+        status = 0
+        if(row == '訂單未完成'):
+            status = 1
+        else:
+            status = 0
+        print(status)
+        print(row)
+        return render_template('order.html',rows = rows,status = status,sum = sum)
+    else:
+        content = request.form.get('button')
+        if(content == ' score'):
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            person = session.get('account',None)
+            data = "select DISTINCT(o_id) from orders where c_id = '{}' order by o_id;".format(person[0][0])
+            cur = conn.cursor()
+            cur.execute(data)
+            orderID = cur.fetchall()
+            # 抓取訂單的商品資訊
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            data = "select * from orders where c_id = '{}' AND o_time IN (select max(o_time) from orders);".format(person[0][0])
+            cur = conn.cursor()
+            cur.execute(data)
+            rows = cur.fetchall()
+            sum = 0
+            for row in rows:
+                sum += row[7]*row[8]
+            row = rows[0][10]
+            sum += 100
+            status = 0
+            if(row == '訂單未完成'):
+                status = 1
+            else:
+                status = 0
+            return render_template('order.html',rows = rows,status = status,sum = sum)
+        elif(content == 'over'):
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            person = session.get('account',None)
+            data = "select * from orders where c_id = '{}' AND o_time IN (select max(o_time) from orders);".format(person[0][0])
+            cur = conn.cursor()
+            cur.execute(data)
+            new = cur.fetchall()
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            data = "Update orders set status = '完成訂單' where o_id = '{}'".format(new[0][0])
+            cur = conn.cursor()
+            cur.execute(data)
+            conn.commit()
+            # 抓取訂單的商品資訊
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            data = "select * from orders where c_id = '{}' AND o_time IN (select max(o_time) from orders);".format(person[0][0])
+            cur = conn.cursor()
+            cur.execute(data)
+            rows = cur.fetchall()
+            print(rows)
+            sum = 0
+            for row in rows:
+                sum += row[7]*row[8]
+            sum += 100
+            row = rows[0][10]
+            status = 0
+            if(row == '訂單未完成'):
+                status = 1
+            else:
+                status = 0
+            return render_template('order.html',rows = rows,status = status,sum = sum)
+        elif(content == 'back'):
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            person = session.get('account',None)
+            data = "select * from orders where c_id = '{}' AND o_time IN (select max(o_time) from orders);".format(person[0][0])
+            cur = conn.cursor()
+            cur.execute(data)
+            new = cur.fetchall()
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            data = "Update orders set status = '已退貨' where o_id = '{}'".format(new[0][0])
+            cur = conn.cursor()
+            cur.execute(data)
+            conn.commit()
+            # 抓取訂單的商品資訊
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            data = "select * from orders where c_id = '{}' AND o_time IN (select max(o_time) from orders);".format(person[0][0])
+            cur = conn.cursor()
+            cur.execute(data)
+            rows = cur.fetchall()
+            print(rows)
+            sum = 0
+            for row in rows:
+                sum += row[7]*row[8]
+            sum += 100
+            row = rows[0][10]
+            status = 0
+            if(row == '訂單未完成'):
+                status = 1
+            else:
+                status = 0
+            return render_template('order.html',rows = rows,status = status,sum = sum)
+        else:
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            person = session.get('account',None)
+            data = "select DISTINCT(o_id) from orders where c_id = '{}' order by o_id;".format(person[0][0])
+            cur = conn.cursor()
+            cur.execute(data)
+            orderID = cur.fetchall()
+            orderlen = len(orderID)
+            # 抓取訂單的商品資訊
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            data = "select * from orders where c_id = '{}' AND o_time IN (select max(o_time) from orders);".format(person[0][0])
+            cur = conn.cursor()
+            cur.execute(data)
+            rows = cur.fetchall()
+            sum = 0
+            for row in rows:
+                sum += row[7]*row[8]
+            row = rows[0][10]
+            status = 0
+            if(row == '訂單未完成'):
+                status = 1
+            else:
+                status = 0
+            return render_template('order.html',rows = rows,status = status,sum = sum)
+
+
 @app.route('/home/question/',methods=['POST','GET'])
 def question():
     if(request.method == 'GET'):
@@ -177,36 +328,136 @@ def seller():
         rows = cur.fetchall()
         return render_template('seller.html',productList = rows)
     else:
-        account = session.get('account',None)
-        print(account)
-        conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
-        data = "select * from product,seller where s_id = '{}' AND seller.list_id = product.list_id Order by p_type".format(account[0][0])
-        cur = conn.cursor()
-        cur.execute(data)
-        rows = cur.fetchall()
-        return render_template('seller.html',productList = rows)
+        content = request.form.get('keywords')
+        if(content != None):
+            account = session.get('account',None)
+            print(account)
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            data = "select * from product,seller where s_id = '{}' AND seller.list_id = product.list_id AND (p_name LIKE '%{}%' OR p_info LIKE '%{}%') Order by p_type".format(account[0][0],content,content)
+            cur = conn.cursor()
+            cur.execute(data)
+            rows = cur.fetchall()
+            return render_template('seller.html',productList = rows)
+        else:
+            content = request.form.get('button')
+            if(content == None):
+                account = session.get('account',None)
+                conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+                data = "select * from product,seller where s_id = '{}' AND seller.list_id = product.list_id Order by p_type".format(account[0][0])
+                cur = conn.cursor()
+                cur.execute(data)
+                rows = cur.fetchall()
+                return render_template('seller.html',productList = rows)
+            else:
+                conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+                data = "Delete from product where p_id = '{}';".format(content)
+                cur = conn.cursor()
+                cur.execute(data)
+                conn.commit()
+                account = session.get('account',None)
+                print(account)
+                conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+                data = "select * from product,seller where s_id = '{}' AND seller.list_id = product.list_id Order by p_type".format(account[0][0])
+                cur = conn.cursor()
+                cur.execute(data)
+                rows = cur.fetchall()
+                return render_template('seller.html',productList = rows)
 
 
 @app.route('/home/seller/sell_cd/',methods=['POST','GET'])
 def sellcd():
-    conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
-    person = session.get('account',None)
-    data = "select p_id,product.list_id,m_name,p_name,p_price,p_num,p_star,p_info,p_type from product,members,seller where p_type = 'CD' AND product.list_id = seller.list_id AND seller.s_id = m_id AND m_id = '{}';".format(person[0][0])
-    cur = conn.cursor()
-    cur.execute(data)
-    rows = cur.fetchall()
-    return render_template('sell_cd.html',info = rows)
+    if(request.method == 'GET'):
+        account = session.get('account',None)
+        print(account)
+        conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+        data = "select * from product,seller where s_id = '{}' AND seller.list_id = product.list_id AND p_type = 'CD';".format(account[0][0])
+        cur = conn.cursor()
+        cur.execute(data)
+        rows = cur.fetchall()
+        return render_template('sell_cd.html',info = rows)
+    else:
+        content = request.form.get('keywords')
+        if(content != None):
+            account = session.get('account',None)
+            print(account)
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            data = "select * from product,seller where s_id = '{}' AND seller.list_id = product.list_id AND (p_name LIKE '%{}%' OR p_info LIKE '%{}%') AND p_type = 'CD';".format(account[0][0],content,content)
+            cur = conn.cursor()
+            cur.execute(data)
+            rows = cur.fetchall()
+            return render_template('sell_cd.html',info = rows)
+        else:
+            content = request.form.get('button')
+            if(content == None):
+                account = session.get('account',None)
+                conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+                data = "select * from product,seller where s_id = '{}' AND seller.list_id = product.list_id AND p_type = 'CD';".format(account[0][0])
+                cur = conn.cursor()
+                cur.execute(data)
+                rows = cur.fetchall()
+                return render_template('sell_cd.html',info = rows)
+            else:
+                conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+                data = "Delete from product where p_id = '{}';".format(content)
+                cur = conn.cursor()
+                cur.execute(data)
+                conn.commit()
+                account = session.get('account',None)
+                print(account)
+                conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+                data = "select * from product,seller where s_id = '{}' AND seller.list_id = product.list_id AND p_type = 'CD';".format(account[0][0])
+                cur = conn.cursor()
+                cur.execute(data)
+                rows = cur.fetchall()
+                return render_template('sell_cd.html',info = rows)
 
 
 @app.route('/home/seller/sell_book/',methods=['POST','GET'])
 def sellbook():
-    conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
-    person = session.get('account',None)
-    data = "select p_id,product.list_id,m_name,p_name,p_price,p_num,p_star,p_info,p_type from product,members,seller where p_type = '書籍' AND product.list_id = seller.list_id AND seller.s_id = m_id AND m_id = '{}';".format(person[0][0])
-    cur = conn.cursor()
-    cur.execute(data)
-    rows = cur.fetchall()
-    return render_template('sell_book.html',info = rows)
+    if(request.method == 'GET'):
+        account = session.get('account',None)
+        print(account)
+        conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+        data = "select * from product,seller where s_id = '{}' AND seller.list_id = product.list_id AND p_type = '書籍';".format(account[0][0])
+        cur = conn.cursor()
+        cur.execute(data)
+        rows = cur.fetchall()
+        return render_template('sell_book.html',info = rows)
+    else:
+        content = request.form.get('keywords')
+        if(content != None):
+            account = session.get('account',None)
+            print(account)
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            data = "select * from product,seller where s_id = '{}' AND seller.list_id = product.list_id AND (p_name LIKE '%{}%' OR p_info LIKE '%{}%') AND p_type = '書籍';".format(account[0][0],content,content)
+            cur = conn.cursor()
+            cur.execute(data)
+            rows = cur.fetchall()
+            return render_template('sell_book.html',info = rows)
+        else:
+            content = request.form.get('button')
+            if(content == None):
+                account = session.get('account',None)
+                conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+                data = "select * from product,seller where s_id = '{}' AND seller.list_id = product.list_id AND p_type = '書籍';".format(account[0][0])
+                cur = conn.cursor()
+                cur.execute(data)
+                rows = cur.fetchall()
+                return render_template('sell_book.html',info = rows)
+            else:
+                conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+                data = "Delete from product where p_id = '{}';".format(content)
+                cur = conn.cursor()
+                cur.execute(data)
+                conn.commit()
+                account = session.get('account',None)
+                print(account)
+                conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+                data = "select * from product,seller where s_id = '{}' AND seller.list_id = product.list_id AND p_type = '書籍';".format(account[0][0])
+                cur = conn.cursor()
+                cur.execute(data)
+                rows = cur.fetchall()
+                return render_template('sell_book.html',info = rows)
 
 
 @app.route('/home/seller/new_product/',methods = ['POST','GET'])
@@ -244,31 +495,34 @@ def addproduct():
 @app.route('/home/customer/',methods=['POST','GET'])
 def customer():
     if(request.method == 'GET'):
+        person = session.get('account',None)
         conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
         data = "select p_id,product.list_id,m_name,p_name,p_price,p_num,p_star,p_info from product,members,seller where product.list_id = seller.list_id AND seller.s_id = m_id;"
         cur = conn.cursor()
         cur.execute(data)
         rows = cur.fetchall()
-        return render_template('customer.html',relative = rows)
+        return render_template('customer.html',relative = rows,person = person[0][0])
     elif(request.method == 'POST'):
         pid = request.form.get('button')
         purchaseNum = request.form.get(pid)
         if(pid == None and purchaseNum == None):
             keyword = request.form.get('keywords')
             if(keyword == ''):
+                person = session.get('account',None)
                 conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
                 data = "select p_id,product.list_id,m_name,p_name,p_price,p_num,p_star,p_info,p_type from product,members,seller where product.list_id = seller.list_id AND seller.s_id = m_id;"
                 cur = conn.cursor()
                 cur.execute(data)
                 rows = cur.fetchall()
-                return render_template('customer.html',relative = rows)
+                return render_template('customer.html',relative = rows,person = person[0][0])
             else:
+                person = session.get('account',None)
                 conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
                 data = "select * from product where p_name LIKE '%{}%' OR p_info LIKE '%{}%';".format(keyword,keyword)
                 cur = conn.cursor()
                 cur.execute(data)
                 rows = cur.fetchall()
-                return render_template('customer.html',relative = rows)
+                return render_template('customer.html',relative = rows,person = person[0][0])
         else:
             conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
             data = "select p_id,product.list_id,m_name,p_name,p_price,p_num,p_star,p_info,p_type from product,members,seller where product.list_id = seller.list_id AND seller.s_id = m_id;"
@@ -293,9 +547,9 @@ def customer():
                 cur = conn.cursor()
                 cur.execute(data)
                 conn.commit()
-                return render_template('customer.html',relative = rows) + """<script>alert('已將商品加入購物車')</script>"""
+                return render_template('customer.html',relative = rows,person = person[0][0]) + """<script>alert('已將商品加入購物車')</script>"""
             else:
-                return render_template('customer.html',relative = rows) + """<script>alert('商品重複加入購物車請至購物車內調整購買數量')</script>"""
+                return render_template('customer.html',relative = rows,person = person[0][0]) + """<script>alert('商品重複加入購物車請至購物車內調整購買數量')</script>"""
 
 
 @app.route('/home/customer/book/',methods=['POST','GET'])
@@ -427,10 +681,14 @@ def cart():
         cur = conn.cursor()
         cur.execute(data)
         rows = cur.fetchall()
-        sum = 0
-        for row in rows:
-            sum += row[3]*row[5]
-        return render_template('cart.html',info = rows,all = sum)
+        if(rows == []):
+            sum = 0
+            return render_template('cart.html',info = rows,all = sum)
+        else:
+            sum = 0
+            for row in rows:
+                sum += row[3]*row[5]
+            return render_template('cart.html',info = rows,all = sum)
     elif(request.method == 'POST'):
         define = request.form.get('button') # 決定要做哪一個button
         # print(define)
@@ -502,16 +760,59 @@ def address():
     else:
         content = request.form.get('button')
         if(content == 'submit'):
+            # 將購物車裡的商品都撈出來
             conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
             person = session.get('account',None)
-            data = "select * from shoppingcart where cart_id = '{}';".format(person[0][3])
+            data = "select * from shoppingcart where cart_id = '{}' order by p_id;".format(person[0][3])
             cur = conn.cursor()
             cur.execute(data)
-            rows = cur.fetchall()
+            products = cur.fetchall()
+            #計算商品總額
             sum = 0
-            for row in rows:
-                sum += row[3]*row[5]
+            for product in products:
+                sum += product[3]*product[5]
             sum += 100
+            # 獲取所有賣家的名稱跟 ID
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            data = "select m_id,m_name,p_id from members,seller,product where m_id = s_id AND seller.list_id = product.list_id AND p_id IN (select p_id from shoppingcart where cart_id = '{}') order by p_id;".format(person[0][3])
+            cur = conn.cursor()
+            cur.execute(data)
+            sellerinfos = cur.fetchall()
+            # 生成隨機訂單ID
+            orderID = ''
+            while(True):
+                orderID = generateOrderId()
+                conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+                data = "select * from generate where o_id = '{}';".format(orderID)
+                cur = conn.cursor()
+                cur.execute(data)
+                orderconfirm = cur.fetchall()
+                if(orderconfirm == []):
+                    break
+            # 將訂單資訊放入 generate 中
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            data = "Insert into generate values('{}','{}','{}')".format(orderID,person[0][3],person[0][4])
+            print(data)
+            cur = conn.cursor()
+            cur.execute(data)
+            conn.commit()
+            # 生成訂單
+            print(orderID,sellerinfos[0][0],sellerinfos[0][1],person[0][0],person[0][1],products[0][0],products[0][2],products[0][3],products[0][5],person[0][4])
+            time = datetime.datetime.today()
+            for product in products:
+                for sellerinfo in sellerinfos:
+                    if(sellerinfo[2] == product[0]):
+                        conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+                        data = "Insert into orders values('{}','{}','{}','{}','{}','{}','{}',{},{},'{}','{}','{}');".format(orderID,sellerinfo[0],sellerinfo[1],person[0][0],person[0][1],product[0],product[2],product[3],product[5],person[0][4],'訂單未完成',time)
+                        print(data)
+                        cur = conn.cursor()
+                        cur.execute(data)
+                        conn.commit()
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            data = "Delete from shoppingcart where cart_id = '{}';".format(person[0][3])
+            cur = conn.cursor()
+            cur.execute(data)
+            conn.commit()
             return redirect(url_for('.success'))
         else:
             conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")

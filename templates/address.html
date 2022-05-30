@@ -24,7 +24,7 @@
             <label>您目前的運送地址: {{add}}<br><br></label>
             <label>運送地址: </label>
             <input  type="text" name="address" maxlength="50" placeholder="請輸入要運送到的地址" required/>
-            <button type="submit" name="button" value="address">提交地址</button>
+            <button type="submit" name="button" value="address" onclick="conf()">提交地址</button>
             <table class="producttable" width="500" border="1">
                 <th>商品名稱</th>
                 <th>價格</th>
@@ -56,6 +56,17 @@
             function sure(){
                 if(window.confirm("確定提交訂單")){
                     alert('訂單已提交')
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        </script>
+
+        <script lang="javascript">
+            function conf(){
+                if(window.confirm("確定更新地址?")){
+                    alert('地址已更新')
                     return true;
                 }else{
                     return false;

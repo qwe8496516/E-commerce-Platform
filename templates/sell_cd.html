@@ -1,47 +1,60 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>CD庫</title>
+        <title>我的商品</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css" />
         <link rel="stylesheet" href="/static/css/product.css" />
     </head>
 
     <body>
         <a href = "/home/">首頁</a>
         <a href = "/">登出</a>
-        <a href = "/home/seller/">我的商品頁</a>
         <a href = "/home/cart/">購物車</a>
+        <a href = "/home/seller/">我的商品頁</a>
         <h1>我的CD庫</h1>
-        
-        <label><br>搜尋CD<input type="text" name="keywords" placeholder="輸入關鍵字查詢相關CD" /></label>
-        <input type="submit" value="搜尋"/>
-        {% if info%}
-            <table id="mytable" class="producttable" width="500" border="1">
-                <th>賣家名稱</th>
-                <th>CD名稱</th>
-                <th>價格</th>
-                <th>剩餘數量</th>
-                <th>評價</th>
-                <th>商品資料</th>
-                {% for row in info%}
-                    <tr>
-                        <td id="{{row[0]}}" name="seller">{{row[2]}}</td>
-                        <td id="{{row[0]}}" name="pname">{{row[3]}}</td>
-                        <td id="{{row[0]}}" name="pprice">{{row[4]}}</td>
-                        <td id="{{row[0]}}" name="pnum">{{row[5]}}</td>
-                        <td id="{{row[0]}}" name="pstar">{{row[6]}}</td>
-                        <td id="{{row[0]}}" name="pinfo">{{row[7]}}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        {% endif %}
-        
+
         {% if info == [] %}
             <h3>無相關商品</h3>
         {% endif %}
-        <!-- <script type="text/javascript">
-            function add_to_cart(){
-                alert('已將該商品加入購物車!')
+        
+        <form action="/home/seller/sell_cd/" method="post">
+            <label><br>搜尋我的商品<input type="text" name="keywords" placeholder="輸入關鍵字查詢相關我的商品   " /></label>
+            <input type="submit" name="search" value="搜尋"/>
+        </form>
+
+
+        {% if info != [] %}
+            <form action="/home/seller/sell_cd/" method="post">
+                <table class="producttable" width="500" border="1">
+                    <th>商品名稱</th>
+                    <th>價格</th>
+                    <th>剩餘數量</th>
+                    <th>評價</th>
+                    <th>商品資料</th>
+                    {% for row in info %}
+                        <tr>
+                            <td>{{row[2]}}</td>
+                            <td>{{row[3]}}</td>
+                            <td>{{row[4]}}</td>
+                            <td>{{row[5]}}</td>
+                            <td>{{row[6]}}</td>
+                            <td><button type="submit" id="{{row[0]}}" name="button" value="{{row[0]}}" onclick="javascript:return del();">商品下架</button></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </form>
+        {% endif %}
+
+        <script lang="javascript">
+            function del(){
+                if(window.confirm("您真的確定要下架該商品？")){
+                    alert('已下架該商品')
+                    return true;
+                }else{
+                    return false;
+                }
             }
-        </script> -->
+        </script>
+
     </body>
 </html>

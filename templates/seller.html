@@ -9,28 +9,56 @@
     <body>
         <a href = "/home/">首頁</a>
         <a href = "/">登出</a>
+        <a href = "/home/cart/">購物車</a>
         <p>我的商品</p>
         <a href = "/home/seller/sell_book/"><i class="bi bi-book"></i>我的書庫</a>
         <a href = "/home/seller/sell_cd/"><i class="bi bi-disc"></i>我的CD庫<br></a>
-        <a href = "new_product/"><br>新增商品</a>
+        <a href = "new_product/"><br>新增商品<br></a>
+
+        {% if productList == [] %}
+            <h3>無相關商品</h3>
+        {% endif %}
         
-        <table class="producttable" width="500" border="1">
-            <th>商品名稱</th>
-            <th>價格</th>
-            <th>剩餘數量</th>
-            <th>評價</th>
-            <th>商品資料</th>
-            <th>商品種類</th>
-            {% for row in productList %}
-                <tr>
-                    <td>{{row[2]}}</td>
-                    <td>{{row[3]}}</td>
-                    <td>{{row[4]}}</td>
-                    <td>{{row[5]}}</td>
-                    <td>{{row[6]}}</td>
-                    <td>{{row[7]}}</td>
-                </tr>
-            {% endfor %}
-        </table>
+        <form action="/home/seller/" method="post">
+            <label><br>搜尋我的商品<input type="text" name="keywords" placeholder="輸入關鍵字查詢相關我的商品   " /></label>
+            <input type="submit" name="search" value="搜尋"/>
+        </form>
+
+
+        {% if productList != [] %}
+            <form action="/home/seller/" method="post">
+                <table class="producttable" width="500" border="1">
+                    <th>商品名稱</th>
+                    <th>價格</th>
+                    <th>剩餘數量</th>
+                    <th>評價</th>
+                    <th>商品資料</th>
+                    <th>商品種類</th>
+                    {% for row in productList %}
+                        <tr>
+                            <td>{{row[2]}}</td>
+                            <td>{{row[3]}}</td>
+                            <td>{{row[4]}}</td>
+                            <td>{{row[5]}}</td>
+                            <td>{{row[6]}}</td>
+                            <td>{{row[7]}}</td>
+                            <td><button type="submit" id="{{row[0]}}" name="button" value="{{row[0]}}" onclick="javascript:return del();">商品下架</button></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </form>
+        {% endif %}
+
+        <script lang="javascript">
+            function del(){
+                if(window.confirm("您真的確定要下架該商品？")){
+                    alert('已下架該商品')
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        </script>
+
     </body>
 </html>

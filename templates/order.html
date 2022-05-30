@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <title>訂單列表</title>
+        <style>
+            .alert{
+                color: red;
+            }
+        </style>
+    </head>
+
+    <body>
+        <a href = "/home/">首頁</a>
+        <a href = "/">登出</a>
+        <h2>我的訂單</h2>
+        <a href = "/home/personal/">我的個人頁面</a>
+
+        {% if rows %}
+        <p>訂單編號: {{rows[0][0]}}</p>
+        <p>訂單完成時間: {{rows[0][11]}}</p>
+        <p>訂單狀態: {{rows[0][10]}}</p>
+        <p>運送地址: {{rows[0][9]}}</p>
+        <table id="mytable" class="producttable" width="500" border="1">
+            <th>賣家名稱</th>
+            <th>買家名稱</th>
+            <th>商品名稱</th>
+            <th>商品價格</th>
+            <th>購買數量</th>
+            {% for row in rows%}
+                <tr>
+                    <td id="{{row[0]}}" name="time">{{row[2]}}</td>
+                    <td id="{{row[0]}}" name="orderID">{{row[4]}}</td>
+                    <td id="{{row[0]}}" name="pname">{{row[6]}}</td>
+                    <td id="{{row[0]}}" name="pprice">{{row[7]}}</td>
+                    <td id="{{row[0]}}" name="pnum">{{row[8]}}</td>
+                </tr>
+            {% endfor %}
+            <td name="time"></td>
+            <td name="orderID">{{rows[0][4]}}</td>
+            <td name="pname">運費</td>
+            <td name="pprice">100</td>
+            <td name="pnum">1</td>
+        </table>
+        <p>總金額: {{sum}}</p>
+        {% endif %}
+
+        
+        {% if not(rows) %}
+            <p class="alert">趕快去買東西建立訂單拉，連個訂單都沒有辦會員幹嘛</p>
+        {% endif %}
+
+
+        {% if status %}
+        <form action="/home/personal/order/" method="post">
+            <button type="submit" name="button" value="score" onclick="javacript:return score();">評分</button>
+        </form>
+        {% endif %}
+        
+        {% if status %}
+            <form action="/home/personal/order/" method="post">
+                <button type="submit" name="button" value="back" onclick="javacript:return back();">退貨</button>
+            </form>
+        {% endif %}
+
+        {% if status %}
+            <form action="/home/personal/order/" method="post">
+                <button type="submit" name="button" value="over" onclick="javacript:return over();">完成訂單</button>
+            </form>
+        {% endif %}
+
+        <script lang="javascript">
+            function score(){
+                prompt('請評分(輸入1~5顆星):')
+            }
+        </script>
+
+        <script lang="javascript">
+            function back(){
+                if(window.confirm("訂單確認要退貨?")){
+                    alert('訂單已退貨')
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        </script>
+
+        <script lang="javascript">
+            function over(){
+                if(window.confirm("訂單確認已完成?")){
+                    alert('訂單已完成')
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        </script>
+
+    </body>
+</html>
