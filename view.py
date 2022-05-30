@@ -148,16 +148,35 @@ def success():
     return render_template('home.html',info = rows[0][1]) # 傳入顧客的名稱
 
 
-@app.route('/home/personal/')
+@app.route('/home/personal/',methods=['POST','GET'])
 def person():
-    conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
-    Name = session.get('account',None)
-    data = "select * from members where m_id = '{}'".format(Name[0][0])
-    cur = conn.cursor()
-    cur.execute(data)
-    rows = cur.fetchall()
-    return render_template('personal.html', info = rows)
-
+    if(request.method == 'GET'):
+        conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+        Name = session.get('account',None)
+        data = "select * from members where m_id = '{}'".format(Name[0][0])
+        cur = conn.cursor()
+        cur.execute(data)
+        rows = cur.fetchall()
+        return render_template('personal.html', info = rows)
+    else:
+        name = request.form.get('name')
+        phone = request.form.get('phone')
+        email = request.form.get('email')
+        address = request.form.get('address')
+        person = session.get('account',None)
+        conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+        Name = session.get('account',None)
+        data = "Update members set m_name = '{}',m_phone = '{}',m_email = '{}',m_add = '{}' where m_id = '{}';".format(name,phone,email,address,person[0][0])
+        cur = conn.cursor()
+        cur.execute(data)
+        conn.commit()
+        conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+        Name = session.get('account',None)
+        data = "select * from members where m_id = '{}'".format(Name[0][0])
+        cur = conn.cursor()
+        cur.execute(data)
+        rows = cur.fetchall()
+        return render_template('personal.html', info = rows)
 
 @app.route('/home/personal/order/',methods=['POST','GET'])
 def order():
@@ -299,6 +318,45 @@ def order():
             else:
                 status = 0
             return render_template('order.html',rows = rows,status = status,sum = sum)
+
+
+@app.route('/home/personal/change/',methods=['POST','GET'])
+def change():
+    if(request.method == 'GET'):
+        print('11111111111111111111111111111111111')
+        return render_template('change.html')
+    else:
+        content = request.form.get('button')
+        if(content == 'password'):
+            return render_template('change.html')
+        else:
+            person = session.get('account',None)
+            conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+            data = "select * from members where m_id = '{}';".format(person[0][0])
+            cur = conn.cursor()
+            cur.execute(data)
+            rows = cur.fetchall()
+            info = rows[0][6]
+            password = request.form.get('password')
+            passwordcheck = request.form.get('passwordcheck')
+            newpassword = request.form.get('newpassword')
+            print(info,password,passwordcheck,newpassword)
+            if(password == passwordcheck and password == info):
+                conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
+                data = "Update members set m_pass = '{}' where m_id = '{}';".format(newpassword,person[0][0])
+                cur = conn.cursor()
+                cur.execute(data)
+                conn.commit()
+                status = 0
+                return render_template('change.html',error = status) + """<script>alert('密碼已更新')</script>"""
+            else:
+                status = 1
+                return render_template('change.html',error = status)
+
+
+
+        
+        
 
 
 @app.route('/home/question/',methods=['POST','GET'])

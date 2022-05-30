@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>更改密碼</title>
+        <style>
+            .error{
+                color: red;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <a href = "/home/">首頁</a>
+        <a href = "/">登出</a>
+        <h2>我的訂單</h2>
+        <a href = "/home/personal/">我的個人頁面</a>
+
+        <form action="/home/personal/change/" method="post">
+            <h1>更改密碼</h1>
+            {%if error%}
+                <p class="error">密碼或確認密碼錯誤</p>
+            {% endif %}
+            <label>目前密碼: </label>
+            <input type="password" placeholder="密碼(password)" name="password" maxlength="20" required />
+            <label><br><br>確認密碼: </label>
+            <input type="password" placeholder="確認密碼(password)" name="passwordcheck" maxlength="20" required />
+            <label><br><br>新密碼: </label>
+            <input type="password" placeholder="密碼(password)" name="newpassword" maxlength="20" required /><br><br>
+            <button type="submit">提交</button>
+        </form>
+
+
+    </body>
+</html>

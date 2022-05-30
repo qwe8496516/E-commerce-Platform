@@ -8,17 +8,39 @@
         <a href = "/">登出</a>
         <h2>我的個人頁面</h2>
         <a href="/home/personal/order/">我的訂單<br></a>
-        {% if info %}
-            <table>
-                <label>名稱: </label>
-                <tr>{{info[0][1]}}<br></tr>
-                <label>手機號碼: </label>
-                <tr>{{info[0][2]}}<br></tr>
-                <label>電子信箱: </label>
-                <tr>{{info[0][3]}}<br></tr>
-                <label>住址: </label>
-                <tr>{{info[0][5]}}<br></tr>
-            </table>
-        {% endif %}
+
+        <form action="/home/personal/" method="post">
+            {% if info %}
+                <table>
+                    <label><br>名稱: </label>
+                    <tr><input type="text" name="name" value="{{info[0][1]}}" maxlength="10" required><br></tr>
+                    <label>手機號碼: </label>
+                    <tr><input type="text" name="phone" value="{{info[0][2]}}" maxlength="10" required><br></tr>
+                    <label>電子信箱: </label>
+                    <tr><input type="text" name="email" value="{{info[0][3]}}" maxlength="50" required><br></tr>
+                    <label>住址: </label>
+                    <tr><input type="text" name="address" value="{{info[0][5]}}" maxlength="50" required><br><br></tr>
+                </table>
+            {% endif %}
+
+            <button type="submit" name="button" value="{{info[0][0]}}" onclick="javascript:return store();">儲存更改</button>
+        </form>
+
+
+        <form action="/home/personal/change/" method="post">
+            <button type="submit" name="button" value="password" >更改密碼</button>
+        </form>
+
+        <script>
+            function store(){
+                if(window.confirm('您確定要儲存更改的資料嗎')){
+                    alert('已更改!')
+                    return true;
+                }else{
+                    return false
+                }
+            }
+        </script>
+
     </body>
 </html>
