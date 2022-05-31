@@ -8,3 +8,51 @@
     text-align: center;
     border-collapse: collapse;
 }
+
+body{
+    font-family: "Comic Sans MS","cursive","黑體-繁","微軟正黑體", sans-serif;
+    background-image:linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), url("/static/photo/pexels-abdullah-ghatasheh-1631677.jpg");
+    background-size: 100%;
+    width: 1481px;
+    display: block;
+    height: 700px;
+    
+}
+
+.head{
+    background-color: rgba(255, 253, 252, 0.666);
+    text-align: 700px;
+    color: rgb(154, 93, 40);
+    display:inline-block;
+    font-size: 30px;
+    padding: 19px;
+    width: 1481px;
+}
+
+.link{
+text-decoration: none;
+display:inline-block;
+font-size: large;
+}
+
+.title{
+display: inline-block;
+position:absolute;
+left:680px;
+top:10px;
+}
+
+.icon{
+font-size: large;
+color: rgb(154, 93, 40);
+}
+
+.word{
+position: absolute;
+top: 45%;
+left: 40%;
+color: white;
+font-size: larger;
+font-weight: bold;
+}
+

@@ -6,14 +6,19 @@
         <link rel="stylesheet" href="/static/css/product.css" />
     </head>
 
-    <body>
-        <a href = "/home/">首頁</a>
-        <a href = "/">登出</a>
-        <a href = "/home/cart/">購物車</a>
-        <p>我的商品</p>
-        <a href = "/home/seller/sell_book/"><i class="bi bi-book"></i>我的書庫</a>
-        <a href = "/home/seller/sell_cd/"><i class="bi bi-disc"></i>我的CD庫<br></a>
-        <a href = "new_product/"><br>新增商品<br></a>
+    <body style="margin: 0px; background-color:#eeeeee;">
+
+        <div class="head">
+            <a class="icon" href="/home/" style="text-decoration:none;float: left;"><i class="bi bi-house-fill"></i>回到首頁</a>
+            <a class="icon" href = "new_product/" style="text-decoration: none;position: absolute;left: 145px;top: 19px;"><i class="bi bi-bag-plus-fill"></i>新增商品</a>
+            <a class="icon" href = "/home/seller/sell_book/" style="text-decoration: none;position: absolute;left: 270px;top: 19px;"><i class="bi bi-book"></i>我的書庫</a>
+            <a class="icon" href = "/home/seller/sell_cd/" style="text-decoration: none;position: absolute;left: 395px;top: 19px"><i class="bi bi-disc"></i>我的CD庫</a>
+            <div class="title" style="font-weight: bold;"><i class="bi bi-shop"></i>我的商品</div>
+            <a class="icon" href="/home/personal/" style="text-decoration:none; float: right;position: absolute;left: 1350px;top: 20px;"><i class="bi bi-person-circle"></i>{{info}}</a> 
+            <a class="icon" href="/" style="text-decoration:none;float: right;"><i class="bi bi-box-arrow-left"></i>登出</a>
+        </div>
+        
+        
 
         {% if productList == [] %}
             <h3>無相關商品</h3>

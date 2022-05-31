@@ -6,13 +6,18 @@
   </head>
     
 
-   <body>
-    <a href = "/home/">首頁</a>
-    <a href = "/">登出</a>
-    <a href = "/home/cart/">購物車</a>
-    <p>商品頁</p>
-    <a href="book/"><i class="bi bi-book"></i>書籍</a>
-    <a href="cd/"><i class="bi bi-disc"></i>CD</a>
+  <body style="margin: 0px; background-color:#eeeeee;">
+    <div class="head">
+        <a class="icon" href="/home/" style="text-decoration:none;float: left;"><i class="bi bi-house-fill"></i>回到首頁</a>
+        <a class="icon" href = "/home/cart/" style="text-decoration:none; float: right;position: absolute;left: 150px;top: 19px;"><i class="bi bi-cart"></i>購物車</a>
+        <a class="icon" href="book/" style="text-decoration:none; float: right;position: absolute;left: 265px;top: 19px;"><i class="bi bi-book" ></i>書籍區</a>
+        <a class="icon" href="cd/"  style="text-decoration:none; float: right;position: absolute;left: 380px;top: 19px;"><i class="bi bi-disc"></i>CD區</a> 
+        <div class="title" style="font-weight: bold;"><i class="bi bi-shop"></i>商品購買專區</div>
+        <a class="icon" href="/" style="text-decoration:none;float: right;"><i class="bi bi-box-arrow-left"></i>登出</a>
+        <a class="icon" href="/home/personal/" style="text-decoration:none; float: right;position: absolute;left: 1350px;top: 19px;"><i class="bi bi-person-circle"></i>{{name}}</a> 
+    </div>
+    
+    
 
       <form action="/home/customer/" method="post">
         <label><br>搜尋商品<input type="text" name="keywords" placeholder="輸入關鍵字查詢相關商品" /></label>

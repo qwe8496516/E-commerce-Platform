@@ -2,57 +2,148 @@
 <html>
     <head>
         <title>註冊帳號</title>
-        <link rel = "stylesheet" href = "/static/css/style.css" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css" />
+        <link rel = "stylesheet" href = "/static/css/login.css" />
+		
+		<style>
+			.form{
+				background-color: hsla(0, 0%, 100%, 0.684);
+				border-radius: 10px;
+				color: rgb(0, 0, 0);
+				padding: 40px;
+				box-shadow: 10px 10px 25px #d0c5b870;
+				text-align: center;
+				background-size: 100%;
+				display: block;
+				align-items: center;
+				justify-content: center;
+				margin: auto; 
+				width: 550px;
+				height: 470px;
+			}
+
+			.register{
+				text-align: center;
+				color: rgb(83, 83, 83) ;
+			}
+
+			.label{
+				font-family: Microsoft JhengHei;
+			}
+
+			.submit{
+				background-color: rgb(255, 255, 255);
+				width:290px;
+				height:42px;
+				border-radius: 10px;
+				display: block;
+				font-size: 15px;
+				text-align: center;
+				padding: 10px;outline: none;
+				margin: 20px auto;
+				border: none;
+       		}
+
+			.submit:hover{
+				font-size: 14px;
+				font-weight: bold;
+				color: #ffffff;
+				text-decoration: none;
+				background-color: #fab496;
+			}
+
+			.head{
+                background-color: rgba(255, 253, 252, 0.666);
+                text-align: 700px;
+                color: rgb(154, 93, 40);
+                display:inline-block;
+                font-weight: bold;
+                font-size: 30px;
+                padding: 19px;
+                width: 1497px;
+            }
+
+			.link{
+				text-decoration: none;
+				display:inline-block;
+				font-size: large;
+			}
+
+			.title{
+				position:absolute;
+				left:680px;
+				top:10px;
+			}
+
+			.label{
+				display: inline-block;
+				width: 120px;
+				text-align: right;
+			}
+
+			.control{
+				border-radius: 5px;
+				height: 22px;
+				border: 0;
+				margin-left: 10px;
+				float:left;
+				height:30px;
+				width: 200px;
+			}
+		</style>
     </head>
         
-    <body>
-		<a href="/">首頁</a>
-        <form action="/register/" method="post">
-			<h1>註冊</h1>
+    <body style="margin: 0px; background-color:#eeeeee;">
+		<div class="head"><a class="link" href="/" style="float: left"><i class="bi bi-box-arrow-in-right"></i>  回到登入頁面</a><div class="title"><i class="bi bi-person-plus"></i></i>註冊區</div></div>
+		
+
+
+		<br><br><br>
+        <form class="form" action="/register/" method="post">
 			{%if error is defined%}
         		<p class="error">註冊失敗</p>
         	{%endif%}
-			<table>
+			<table  style="border-collapse:separate; border-spacing: 0px 20px;">
                 <tr>
-					<td><label for="username">姓名 : </label></td>
-					<td><input type="rdt" name="name" id="name" placeholder="請輸入姓名" maxlength="10" required/><br></td>
-					<td></td>
+					<td><label class="label" for="username">姓名 : </label></td>
+					<td><input class="control" type="rdt" name="name" id="name" placeholder="請輸入姓名" maxlength="10" style="float:left;" required/><br></td>
+					
 				</tr>
 				<tr>
-					<td><label for="username">手機號碼(帳號) : </label></td>
-					<td><input type="rdt" name="phone" id="phone" placeholder="請輸入手機號碼" maxlength="10" required/><br></td>
-					<td></td>
+					<td><label class="label" for="username">手機號碼 : </label></td>
+					<td><input class="control" type="rdt" name="phone" id="phone" placeholder="請輸入手機號碼" maxlength="10" style="float:left;" required/><br></td>
+					
 				</tr>
                 <tr>
-					<td><label for="username">電子信箱 : </label></td>
-					<td><input type="rdt" name="email" id="email" placeholder="請輸入電子信箱" maxlength="50" required/><br></td>
+					<td><label class="label" for="username">電子信箱 : </label></td>
+					<td><input class="control" type="rdt" name="email" id="email" placeholder="請輸入電子信箱" maxlength="50" style="float:left;" required/><br></td>
+					
+				</tr>
+				<tr>
+					<td><label class="label" class="label" for="pwd">密碼 : </label></td>
+					<td><input class="control" type="password" name="password" id="pwd" placeholder="請輸入密碼" maxlength="20" style="float:left;" required/></td>
 					<td></td>
 				</tr>
 				<tr>
-					<td><label for="pwd">密碼 : </label></td>
-					<td><input type="password" name="password" id="pwd" placeholder="請輸入密碼" maxlength="20" required/></td>
+					<td><label class="label" for="pwd">確認密碼 : </label></td>
+					<td><input class="control" type="password" name="password_vetify" id="pwd" placeholder="請再次輸入密碼" maxlength="20"  required/></td>
 					<td></td>
 				</tr>
 				<tr>
-					<td><label for="pwd">確認密碼 : </label></td>
-					<td><input type="password" name="password_vetify" id="pwd" placeholder="請再次輸入密碼" maxlength="20" required/></td>
+					<td><label class="label" for="pwd">請輸入住址 : </label></td>
+					<td><input class="control" type="text" name="address" id="add" placeholder="請輸入住址" maxlength="50" style="width: 375px;" /></td>
 					<td></td>
 				</tr>
 				<tr>
-					<td><label for="pwd">請輸入住址 : </label></td>
-					<td><input type="text" name="address" id="add" placeholder="請輸入住址" maxlength="50" /></td>
-					<td></td>
-				</tr>
-				<tr>
-                    <td><label for="pwd">請選擇性別 : </label></td>
-                    <td>
-                        <input type="radio" name="gender" value="G"/>女
-    					<input type="radio" name="gender" value="B"/>男
+                    <td><label class="label" for="pwd">請選擇性別 : </label></td>
+                    <td style="float:left;margin-left: 10px;">
+                        <input class="button" type="radio" name="gender" value="G"/>女
+    					<input class="button" type="radio" name="gender" value="B"/>男
                     </td>
                 </tr>
 				<tr>
                     <td></td>
-					<td><br/><input type="submit" value="註冊"></td>
+					<td><input class="submit" type="submit" value="註冊" style="margin-right: 200px;" ></td>
 					<td></td>
 					<td></td>
 				</tr>

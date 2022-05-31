@@ -3,20 +3,63 @@
 
 <head>
     <title>登入頁面</title>
-    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="/static/css/login.css">
+    <style>
+        .word{
+            font-family: Comic Sans MS;
+            font-size:small;
+            color: rgba(91, 90, 90, 0.774);
+            align: center;
+        }
+        .submit{
+            width:290px;
+            height:42px;
+            border-radius: 20px;
+            display: block;
+            font-size: 15px;
+            text-align: center;
+            padding: 10px;outline: none;
+            margin: 20px auto;
+            border: none;
+        }
+
+        .submit:hover{
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+            background-color: #fab496;
+        }
+
+        .head{
+                background-color: rgba(255, 253, 252, 0.666);
+                text-align: center  ;
+                color: rgb(154, 93, 40);
+                display:inline-block;
+                font-weight: bold;
+                font-size: 30px;
+                padding: 11px;
+                width: 1514px;
+            }
+    </style>
 </head>
 
-<body>
-    <form class="login" action="/" method="post">
-        <h1>Login 登入</h1>
+<body style="margin: 0px; background-color:#eeeeee;">
+    <div class="head"><i class="bi bi-box-arrow-right"></i>登入頁面</div>
+    <br><br><br>
+    <h1 style="text-align: center; color: rgb(83, 83, 83);font: 900;">SIGN IN</h1>
+    <br>
+    <form class="login" action="/" method="post" style="margin: auto; width: 380px;height: 3450x;">
         {%if error is defined%}
         <p class="error">帳號密碼錯誤</p>
         {%endif%}
+        <label class="word">PHONE NUMBER</label>
         <input type="text" placeholder="帳號(phone)" name="my_phone" maxlength="10" required />
-        <input type="password" placeholder="密碼(password)" name="password" required />
-        <button type="submit">登入</button>
-        <a href="/register/">註冊帳號</a>
+        <label class="word">PASSWORD</label>
+        <input type="password" placeholder="密碼(password)" name="password" required /><br>
+        <button class="submit" type="submit" >登入</button>
+        <nobr style="font-family: Microsoft JhengHei;">還沒有帳號嗎!快來</nobr><a href="/register/" style="text-align:right;text-decoration:none;color: #43719ef9;font-family: Microsoft JhengHei;">註冊帳號</a>
     </form>
 
 

@@ -5,11 +5,89 @@
     <title>首頁</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="/static/css/style.css" />
-    <link rel="stylesheet" href="/static/css/home.css" />
+    <link rel="stylesheet" href="/static/css/login.css" />
+    
+    <style>
+        .head{
+                background-color: rgba(255, 253, 252, 0.666);
+                text-align: 700px;
+                color: rgb(154, 93, 40);
+                display:inline-block;
+                font-size: 30px;
+                padding: 19px;
+                width: 1497px;
+            }
+
+        .link{
+            text-decoration: none;
+            display:inline-block;
+            font-size: large;
+        }
+
+        .title{
+            display: inline-block;
+            position:absolute;
+            left:680px;
+            top:10px;
+        }
+
+        .icon{
+            font-size: large;
+            color: rgb(154, 93, 40);
+        }
+
+        .box {
+            border: 2px solid rgb(255, 255, 255);
+            width: 800px;
+            height: 500px;
+            padding: 5px;
+            margin:0 auto;
+            
+            background: #ffffff;
+        }
+        .box .div1 {
+            position: relative;
+            width: 400px;
+            height: 250px;
+            float: left;
+        }
+        .box .div2 {
+            position: relative;
+            width: 800px;
+            height: 3px;
+            top:50%;
+            height: 1px;
+            background: linear-gradient(90deg, #6b1b00, #ffffff, #6b1b00);
+        }
+        .box .div3 {
+            position: relative;
+            width: 1px;
+            height: 500px;
+            left:50%;
+            background: linear-gradient(0deg,  #6b1b00, #ffffff, #6b1b00);
+        }
+
+        .word{
+            position: absolute;
+            top: 45%;
+            left: 40%;
+            color: white;
+            font-size: larger;
+            font-weight: bold;
+        }
+
+    </style>
 
 </head>
 
-<body>
+<body style="margin: 0px; background-color:#eeeeee;">
+    <div class="head">
+        <a class="icon" href="/home/" style="text-decoration:none;float: left;"><i class="bi bi-house-fill"></i>回到首頁</a>
+        <div class="title" style="font-weight: bold;"><i class="bi bi-bag"></i>購物專區</div>
+        <a class="icon" href="/" style="text-decoration:none;float: right;"><i class="bi bi-box-arrow-left"></i>登出</a>
+        <a class="icon" href="/home/personal/" style="text-decoration:none; float: right;position: absolute;left: 1350px;top: 19px;"><i class="bi bi-person-circle"></i>{{info}}</a> 
+    </div>
+
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
@@ -17,17 +95,23 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-    <a href="/home/">首頁</a>
-    <a href="/">登出</a>
-    <a href="/home/question/">問題回報</a>
-    <br>
-    <a>歡迎登入</a>
-    <a href="/home/personal/">{{info}}</a>    
+       
     <h1>Home Page</h1>
-    <h2>Home</h2>
-    <a href="cart/"><i class="bi bi-cart"></i>購物車</a>
-    <a href="customer/"><i class="bi bi-people-fill"></i>會員</a>
-    <a href="seller/"><i class="bi bi-shop"></i>我的賣場</a>
+
+    <div class="box">
+        <div class='div1'><a href="customer/"><img class="photo" src="/static/photo/pexels-polina-zimmerman-3747484.jpg" alt="商品區" style="width: 400px;height: 250px; opacity: 0.8;"></a><span class="word">購買商品區</span></div>
+        <div class='div1'><a href="seller/"><img class="photo" src="/static/photo/pexels-photo-11264405.webp" alt="我的賣場" style="width: 400px;height: 250px;opacity: 0.8;"></a><span class="word">我的賣場</span></div>
+        <div class='div1'><a href="cart/"><img class="photo" src="/static/photo/pexels-gustavo-fring-4005035.jpg" alt="購物車" style="width: 400px;height: 250px;opacity: 0.8;"></a><span class="word">購物車</span></div>
+        <div class='div1'><a href="/home/question/"><img class="photo" src="/static/photo/pexels-photo-267401.jpeg" alt="問題回報" style="width: 400px;height: 250px;opacity: 0.9   ;"></a><span class="word">問題回報</span></div>
+        
+        <div class='div2'></div>
+        <div class='div3'></div>
+    </div>
+    <!-- style="text-decoration:none;"><i class="bi bi-question-circle"></i>問題回報 -->
+    <!-- style="text-decoration:none;"<i class="bi bi-cart"></i>購物車 -->
+    <!-- <i class="bi bi-people-fill"></i>會員 -->
+    <!-- 
+    <a href="seller/" style="text-decoration:none;"><i class="bi bi-shop"></i>我的賣場</a> -->
 </body>
 
 </html>

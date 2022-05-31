@@ -119,7 +119,7 @@ def register():
                 print(data)
                 cur.execute(data)
                 conn.commit()                                                     
-            return redirect(url_for('.seller'))
+            return redirect(url_for('.login'))
         #密碼不相同
         else:
             return render_template("register.html",error=True) 
@@ -311,6 +311,7 @@ def order():
             sum = 0
             for row in rows:
                 sum += row[7]*row[8]
+            sum += 100
             row = rows[0][10]
             status = 0
             if(row == '訂單未完成'):
@@ -323,12 +324,13 @@ def order():
 @app.route('/home/personal/change/',methods=['POST','GET'])
 def change():
     if(request.method == 'GET'):
-        print('11111111111111111111111111111111111')
-        return render_template('change.html')
+        person = session.get('account',None)
+        return render_template('change.html',info = person)
     else:
         content = request.form.get('button')
         if(content == 'password'):
-            return render_template('change.html')
+            person = session.get('account',None)
+            return render_template('change.html',info = person)
         else:
             person = session.get('account',None)
             conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
@@ -348,10 +350,10 @@ def change():
                 cur.execute(data)
                 conn.commit()
                 status = 0
-                return render_template('change.html',error = status) + """<script>alert('密碼已更新')</script>"""
+                return render_template('change.html',error = status,info = person) + """<script>alert('密碼已更新')</script>"""
             else:
                 status = 1
-                return render_template('change.html',error = status)
+                return render_template('change.html',error = status,info = person)
 
 
 
@@ -362,7 +364,9 @@ def change():
 @app.route('/home/question/',methods=['POST','GET'])
 def question():
     if(request.method == 'GET'):
-        return render_template('question.html')
+        Name = session.get('account',None)
+        person = Name[0][1]
+        return render_template('question.html',info = person)
     elif(request.method == 'POST'):
         conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
         Name = session.get('account',None)
@@ -371,7 +375,8 @@ def question():
         cur = conn.cursor()
         cur.execute(data)
         conn.commit()
-        return render_template('question.html') + """<script>alert('回報成功')</script>"""
+        person = Name[0][1]
+        return render_template('question.html',info = person) + """<script>alert('回報成功')</script>"""
 
 
 @app.route('/home/seller/',methods=['POST','GET'])
@@ -384,7 +389,7 @@ def seller():
         cur = conn.cursor()
         cur.execute(data)
         rows = cur.fetchall()
-        return render_template('seller.html',productList = rows)
+        return render_template('seller.html',productList = rows,info = account[0][1])
     else:
         content = request.form.get('keywords')
         if(content != None):
@@ -395,7 +400,7 @@ def seller():
             cur = conn.cursor()
             cur.execute(data)
             rows = cur.fetchall()
-            return render_template('seller.html',productList = rows)
+            return render_template('seller.html',productList = rows,info = account[0][1])
         else:
             content = request.form.get('button')
             if(content == None):
@@ -405,7 +410,7 @@ def seller():
                 cur = conn.cursor()
                 cur.execute(data)
                 rows = cur.fetchall()
-                return render_template('seller.html',productList = rows)
+                return render_template('seller.html',productList = rows,info = account[0][1])
             else:
                 conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
                 data = "Delete from product where p_id = '{}';".format(content)
@@ -419,7 +424,7 @@ def seller():
                 cur = conn.cursor()
                 cur.execute(data)
                 rows = cur.fetchall()
-                return render_template('seller.html',productList = rows)
+                return render_template('seller.html',productList = rows,info = account[0][1])
 
 
 @app.route('/home/seller/sell_cd/',methods=['POST','GET'])
@@ -432,7 +437,7 @@ def sellcd():
         cur = conn.cursor()
         cur.execute(data)
         rows = cur.fetchall()
-        return render_template('sell_cd.html',info = rows)
+        return render_template('sell_cd.html',info = rows,name = account[0][1])
     else:
         content = request.form.get('keywords')
         if(content != None):
@@ -443,7 +448,7 @@ def sellcd():
             cur = conn.cursor()
             cur.execute(data)
             rows = cur.fetchall()
-            return render_template('sell_cd.html',info = rows)
+            return render_template('sell_cd.html',info = rows,name = account[0][1])
         else:
             content = request.form.get('button')
             if(content == None):
@@ -453,7 +458,7 @@ def sellcd():
                 cur = conn.cursor()
                 cur.execute(data)
                 rows = cur.fetchall()
-                return render_template('sell_cd.html',info = rows)
+                return render_template('sell_cd.html',info = rows,name = account[0][1])
             else:
                 conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
                 data = "Delete from product where p_id = '{}';".format(content)
@@ -467,7 +472,7 @@ def sellcd():
                 cur = conn.cursor()
                 cur.execute(data)
                 rows = cur.fetchall()
-                return render_template('sell_cd.html',info = rows)
+                return render_template('sell_cd.html',info = rows,name = account[0][1])
 
 
 @app.route('/home/seller/sell_book/',methods=['POST','GET'])
@@ -480,7 +485,7 @@ def sellbook():
         cur = conn.cursor()
         cur.execute(data)
         rows = cur.fetchall()
-        return render_template('sell_book.html',info = rows)
+        return render_template('sell_book.html',info = rows,name = account[0][1])
     else:
         content = request.form.get('keywords')
         if(content != None):
@@ -491,7 +496,7 @@ def sellbook():
             cur = conn.cursor()
             cur.execute(data)
             rows = cur.fetchall()
-            return render_template('sell_book.html',info = rows)
+            return render_template('sell_book.html',info = rows,name = account[0][1])
         else:
             content = request.form.get('button')
             if(content == None):
@@ -501,7 +506,7 @@ def sellbook():
                 cur = conn.cursor()
                 cur.execute(data)
                 rows = cur.fetchall()
-                return render_template('sell_book.html',info = rows)
+                return render_template('sell_book.html',info = rows,name = account[0][1])
             else:
                 conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
                 data = "Delete from product where p_id = '{}';".format(content)
@@ -515,7 +520,7 @@ def sellbook():
                 cur = conn.cursor()
                 cur.execute(data)
                 rows = cur.fetchall()
-                return render_template('sell_book.html',info = rows)
+                return render_template('sell_book.html',info = rows,name = account[0][1])
 
 
 @app.route('/home/seller/new_product/',methods = ['POST','GET'])
@@ -545,9 +550,10 @@ def addproduct():
             conn.commit()
             return redirect(url_for('.seller'))
         else:
-            return render_template('new_product.html',error=True)
+            return render_template('new_product.html',error=True,name = account[0][1])
     else:
-        return render_template('new_product.html')
+        account = session.get('account',None)
+        return render_template('new_product.html',name = account[0][1])
 
 
 @app.route('/home/customer/',methods=['POST','GET'])
@@ -559,7 +565,7 @@ def customer():
         cur = conn.cursor()
         cur.execute(data)
         rows = cur.fetchall()
-        return render_template('customer.html',relative = rows,person = person[0][0])
+        return render_template('customer.html',relative = rows,person = person[0][0],name = person[0][1])
     elif(request.method == 'POST'):
         pid = request.form.get('button')
         purchaseNum = request.form.get(pid)
@@ -572,7 +578,7 @@ def customer():
                 cur = conn.cursor()
                 cur.execute(data)
                 rows = cur.fetchall()
-                return render_template('customer.html',relative = rows,person = person[0][0])
+                return render_template('customer.html',relative = rows,person = person[0][0],name = person[0][1])
             else:
                 person = session.get('account',None)
                 conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
@@ -580,7 +586,7 @@ def customer():
                 cur = conn.cursor()
                 cur.execute(data)
                 rows = cur.fetchall()
-                return render_template('customer.html',relative = rows,person = person[0][0])
+                return render_template('customer.html',relative = rows,person = person[0][0],name = person[0][1])
         else:
             conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
             data = "select p_id,product.list_id,m_name,p_name,p_price,p_num,p_star,p_info,p_type from product,members,seller where product.list_id = seller.list_id AND seller.s_id = m_id;"
@@ -605,21 +611,23 @@ def customer():
                 cur = conn.cursor()
                 cur.execute(data)
                 conn.commit()
-                return render_template('customer.html',relative = rows,person = person[0][0]) + """<script>alert('已將商品加入購物車')</script>"""
+                return render_template('customer.html',relative = rows,person = person[0][0],name = person[0][1]) + """<script>alert('已將商品加入購物車')</script>"""
             else:
-                return render_template('customer.html',relative = rows,person = person[0][0]) + """<script>alert('商品重複加入購物車請至購物車內調整購買數量')</script>"""
+                return render_template('customer.html',relative = rows,person = person[0][0],name = person[0][1]) + """<script>alert('商品重複加入購物車請至購物車內調整購買數量')</script>"""
 
 
 @app.route('/home/customer/book/',methods=['POST','GET'])
 def book():
     if(request.method == 'GET'):
+        person = session.get('account',None)
         conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
         data = "select p_id,product.list_id,m_name,p_name,p_price,p_num,p_star,p_info,p_type from product,members,seller where p_type = '書籍' AND product.list_id = seller.list_id AND seller.s_id = m_id;"
         cur = conn.cursor()
         cur.execute(data)
         rows = cur.fetchall()
-        return render_template('book.html',info = rows)
+        return render_template('book.html',info = rows,name = person[0][1])
     elif(request.method == 'POST'):
+        person = session.get('account',None)
         pid = request.form.get('button')
         purchaseNum = request.form.get(pid)
         if(pid == None and purchaseNum == None):
@@ -630,7 +638,7 @@ def book():
                 cur = conn.cursor()
                 cur.execute(data)
                 rows = cur.fetchall()
-                return render_template('book.html',info = rows)
+                return render_template('book.html',info = rows,name = person[0][1])
             else:
                 conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
                 data = "select * from product where (p_name LIKE '%{}%' OR p_info LIKE '%{}%') AND p_type = '書籍';".format(keyword,keyword)
@@ -639,9 +647,9 @@ def book():
                 rows = cur.fetchall()
                 print(rows)
                 if(rows == []):
-                    return render_template('book.html',info = rows)
+                    return render_template('book.html',info = rows,name = person[0][1])
                 else:
-                    return render_template('book.html',info = rows)
+                    return render_template('book.html',info = rows,name = person[0][1])
         else:
             conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
             data = "select p_id,product.list_id,m_name,p_name,p_price,p_num,p_star,p_info,p_type from product,members,seller where p_type = '書籍' AND product.list_id = seller.list_id AND seller.s_id = m_id;"
@@ -665,21 +673,23 @@ def book():
                 cur = conn.cursor()
                 cur.execute(data)
                 conn.commit()
-                return render_template('book.html',info = rows) + """<script>alert('已將商品加入購物車')</script>"""
+                return render_template('book.html',info = rows,name = person[0][1]) + """<script>alert('已將商品加入購物車')</script>"""
             else:
-                return render_template('book.html',info = rows) + """<script>alert('商品重複加入購物車請至購物車內調整購買數量')</script>"""
+                return render_template('book.html',info = rows,name = person[0][1]) + """<script>alert('商品重複加入購物車請至購物車內調整購買數量')</script>"""
     
 
 @app.route('/home/customer/cd/',methods=['POST','GET'])
 def cd():
     if(request.method == 'GET'):
+        person = session.get('account',None)
         conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
         data = "select p_id,product.list_id,m_name,p_name,p_price,p_num,p_star,p_info,p_type from product,members,seller where p_type = 'CD' AND product.list_id = seller.list_id AND seller.s_id = m_id;"
         cur = conn.cursor()
         cur.execute(data)
         rows = cur.fetchall()
-        return render_template('cd.html',info = rows)
+        return render_template('cd.html',info = rows,name = person[0][1])
     elif(request.method == 'POST'):
+        person = session.get('account',None)
         pid = request.form.get('button')
         purchaseNum = request.form.get(pid)
         if(pid == None and purchaseNum == None):
@@ -690,7 +700,7 @@ def cd():
                 cur = conn.cursor()
                 cur.execute(data)
                 rows = cur.fetchall()
-                return render_template('cd.html',info = rows)
+                return render_template('cd.html',info = rows,name = person[0][1])
             else:
                 conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
                 data = "select * from product where (p_name LIKE '%{}%' OR p_info LIKE '%{}%') AND p_type = 'CD';".format(keyword,keyword)
@@ -698,9 +708,9 @@ def cd():
                 cur.execute(data)
                 rows = cur.fetchall()   
                 if(rows == []):
-                    return render_template('cd.html',info = rows)
+                    return render_template('cd.html',info = rows,name = person[0][1])
                 else:
-                    return render_template('cd.html',info = rows)
+                    return render_template('cd.html',info = rows,name = person[0][1])
         else:
             conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
             data = "select p_id,product.list_id,m_name,p_name,p_price,p_num,p_star,p_info,p_type from product,members,seller where p_type = 'CD' AND product.list_id = seller.list_id AND seller.s_id = m_id;"
@@ -725,9 +735,9 @@ def cd():
                 cur = conn.cursor()
                 cur.execute(data)
                 conn.commit()
-                return render_template('cd.html',info = rows) + """<script>alert('已將商品加入購物車')</script>"""
+                return render_template('cd.html',info = rows,name = person[0][1]) + """<script>alert('已將商品加入購物車')</script>"""
             else:
-                return render_template('cd.html',info = rows) + """<script>alert('商品重複加入購物車請至購物車內調整購買數量')</script>"""
+                return render_template('cd.html',info = rows,name = person[0][1]) + """<script>alert('商品重複加入購物車請至購物車內調整購買數量')</script>"""
 
 
 @app.route('/home/cart/',methods=['GET','POST'])
@@ -739,14 +749,16 @@ def cart():
         cur = conn.cursor()
         cur.execute(data)
         rows = cur.fetchall()
+        name = person[0][1]
         if(rows == []):
             sum = 0
-            return render_template('cart.html',info = rows,all = sum)
+            return render_template('cart.html',info = rows,all = sum, person = name)
         else:
             sum = 0
             for row in rows:
                 sum += row[3]*row[5]
-            return render_template('cart.html',info = rows,all = sum)
+            name = person[0][1]
+            return render_template('cart.html',info = rows,all = sum, person = name)
     elif(request.method == 'POST'):
         define = request.form.get('button') # 決定要做哪一個button
         # print(define)
@@ -773,11 +785,12 @@ def cart():
             data = "select * from shoppingcart where cart_id = '{}';".format(person[0][3])
             cur = conn.cursor()
             cur.execute(data)
+            name = person[0][1]
             rows = cur.fetchall()
             sum = 0
             for row in rows:
                 sum += row[3]*row[5]
-            return render_template('cart.html',info = rows,all = sum)
+            return render_template('cart.html',info = rows,all = sum, person = name)
         elif(define == 'submit'):
             return redirect(url_for('.address'))
         else: # 刪除商品
@@ -787,6 +800,7 @@ def cart():
             cur = conn.cursor()
             cur.execute(data)
             conn.commit()
+            name = person[0][1]
             conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
             person = session.get('account',None)
             data = "select * from shoppingcart where cart_id = '{}';".format(person[0][3])
@@ -797,7 +811,7 @@ def cart():
             for row in rows:
                 sum += row[3]*row[5]
             
-            return render_template('cart.html',info = rows,all = sum)
+            return render_template('cart.html',info = rows,all = sum, person = name)
 
 
 @app.route('/home/cart/address/',methods=['GET','POST'])
@@ -814,7 +828,7 @@ def address():
         for row in rows:
             sum += row[3]*row[5]
         sum += 100
-        return render_template('address.html',info = rows,all = sum,add = address)
+        return render_template('address.html',info = rows,all = sum,add = address,name = person[0][1])
     else:
         content = request.form.get('button')
         if(content == 'submit'):
@@ -891,7 +905,7 @@ def address():
             for row in rows:
                 sum += row[3]*row[5]
             sum += 100
-            return render_template('address.html',info = rows,all = sum,add = address)
+            return render_template('address.html',info = rows,all = sum,add = address,name = person[0][1])
 
 if __name__ == '__main__':
     app.run(host = '127.0.0.1',port = 5000,debug = True)

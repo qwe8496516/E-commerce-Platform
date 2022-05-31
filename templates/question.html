@@ -2,18 +2,116 @@
 <html>
     <head>
         <title>問題回報</title>
-        <link rel="stylesheet" href="/static/css/product.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css" />
+        <link rel="stylesheet" href="/static/css/login.css" />
+
+        <style>
+            
+            .form{
+				background-color: hsla(0, 0%, 100%, 0.684);
+				border-radius: 10px;
+				color: rgb(0, 0, 0);
+				padding: 40px;
+				box-shadow: 10px 10px 25px #d0c5b870;
+				text-align: center;
+				background-size: 100%;
+				display: block;
+				align-items: center;
+				justify-content: center;
+				margin: auto; 
+				width: 550px;
+				height: 250px;
+			}
+
+            .head{
+                background-color: rgba(255, 253, 252, 0.666);
+                text-align: 700px;
+                color: rgb(154, 93, 40);
+                display:inline-block;
+                font-size: 30px;
+                padding: 19px;
+                width: 1497px;
+            }
+
+            .link{
+                text-decoration: none;
+                display:inline-block;
+                font-size: large;
+            }
+
+            .title{
+                display: inline-block;
+                position:absolute;
+                left:650px;
+                top:10px;
+            }
+
+            .icon{
+                font-size: large;
+                color: rgb(154, 93, 40);
+            }
+
+            .label{
+                position: absolute;
+                top: 32%;
+                left: 34%;
+            }
+
+            .control2{
+				border-radius: 5px;
+				height: 22px;
+				border: 0;
+				margin-left: 10px;
+				height:30px;
+				width: 200px;
+			}  
+
+            .control{
+				border-radius: 5px;
+				height: 22px;
+				border: 0;
+				margin-left: 10px;
+				height:150px;
+				width: 450px;
+			}  
+
+            .submit{
+				background-color: rgb(255, 255, 255);
+				width:290px;
+				height:42px;
+				border-radius: 10px;
+				display: block;
+				font-size: 15px;
+				text-align: center;
+				padding: 10px;outline: none;
+				margin: 20px auto;
+				border: none;
+       		}
+
+			.submit:hover{
+				font-size: 14px;
+				font-weight: bold;
+				color: #ffffff;
+				text-decoration: none;
+				background-color: #fab496;
+			}
+
+        </style>
     </head>
 
-    <body>
-        <a href = "/home/">首頁</a>
-        <a href = "/">登出</a>
-        <h1>問題回報</h1>
-        
-        <form action="/home/question/" method="POST">
-            <label>問題回報 : <br></label>
-            <input type="text" name="question" required/>
-            <input type="submit" value="提交" />
+    <body style="margin: 0px; background-color:#eeeeee;">
+
+        <div class="head">
+            <a class="icon" href="/home/" style="text-decoration:none;float: left;"><i class="bi bi-house-fill"></i>回到首頁</a>
+            <div class="title" style="font-weight: bold;"><i class="bi bi-question-circle"></i>問題回報區</div>
+            <a class="icon" href="/home/personal/" style="text-decoration:none; float: right;position: absolute;left: 1350px;top: 20px;"><i class="bi bi-person-circle"></i>{{info}}</a> 
+            <a class="icon" href="/" style="text-decoration:none;float: right;"><i class="bi bi-box-arrow-left"></i>登出</a>
+        </div>
+        <br><br><br><br><br><br><br>
+        <form class="form" action="/home/question/" method="POST">
+            <label class="label">系統異常填寫 : <br></label><br><br>
+            <textarea class="control" name="question"   cols="40"   rows="10"   style="OVERFLOW:   hidden" placeholder="請提出系統異常問題" required></textarea>
+            <br><input class="submit" type="submit" value="提交" />
         </form>
     </body>
 </html>

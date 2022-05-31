@@ -1,34 +1,162 @@
 <html>
     <head>
         <!-- <link rel="stylesheet" href="/static/css/style.css" /> -->
+        <title>我的個人頁面</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css" />
+        <link rel="stylesheet" href="/static/css/login.css" />
+        <style>
+            .form{
+				background-color: hsla(0, 0%, 100%, 0.684);
+				border-radius: 10px;
+				color: rgb(0, 0, 0);
+				padding: 40px;
+				box-shadow: 10px 10px 25px #d0c5b870;
+				text-align: center;
+				background-size: 100%;
+				display: block;
+				align-items: center;
+				justify-content: center;
+				margin: auto; 
+				width: 550px;
+				height: 320px;
+			}
+
+            .head{
+                background-color: rgba(255, 253, 252, 0.666);
+                text-align: 700px;
+                color: rgb(154, 93, 40);
+                display:inline-block;
+                font-size: 30px;
+                padding: 19px;
+                width: 1497px;
+            }
+
+            .link{
+                text-decoration: none;
+                display:inline-block;
+                font-size: large;
+            }
+
+            .title{
+                display: inline-block;
+                position:absolute;
+                left:650px;
+                top:10px;
+            }
+
+            .icon{
+                font-size: large;
+                color: rgb(154, 93, 40);
+            }
+
+            .label{
+				display: inline-block;
+				width: 115px;
+				text-align: right;
+			}
+
+			.control{
+				border-radius: 5px;
+				height: 22px;
+				border: 0;
+				margin-left: 10px;
+				float:left;
+				height:30px;
+				width: 200px;
+			}
+
+            .submit{
+				background-color: rgb(255, 255, 255);
+				width:290px;
+				height:42px;
+				border-radius: 10px;
+				display: block;
+				font-size: 15px;
+				text-align: center;
+				padding: 10px;outline: none;
+				margin: 20px auto;
+				border: none;
+                position: absolute;
+                top: 60%;
+                left: 40%;
+       		}
+
+			.submit:hover{
+				font-size: 14px;
+				font-weight: bold;
+				color: #ffffff;
+				text-decoration: none;
+				background-color: #fab496;
+			}
+
+            .submit2{
+				width:90px;
+				height:42px;
+				border-radius: 10px;
+				display: block;
+				font-size: 15px;
+				text-align: center;
+				padding: 10px;outline: none;
+				margin: 20px auto;
+				border: none;
+                position: absolute;
+                top: 60%;   
+                left: 62%;
+       		}
+
+			.submit2:hover{
+				font-size: 14px;
+				font-weight: bold;
+				color: #ffffff;
+				text-decoration: none;
+				background-color: #fab496;
+			}
+
+        </style>
     </head>
 
-    <body>
-        <a href = "/home/">首頁</a>
-        <a href = "/">登出</a>
-        <h2>我的個人頁面</h2>
-        <a href="/home/personal/order/">我的訂單<br></a>
-
-        <form action="/home/personal/" method="post">
+    <body style="margin: 0px; background-color:#eeeeee;">
+        <div class="head">
+            <a class="icon" href="/home/" style="text-decoration:none;float: left;"><i class="bi bi-house-fill"></i>回到登入頁面</a>
+            <a class="icon" href="/home/personal/order/" style="text-decoration:none; float: right;position: absolute;left: 190px;top: 20px;"><i class="bi bi-box"></i>我的訂單</a> 
+            <div class="title" style="font-weight: bold;"><i class="bi bi-person-circle"></i></i>我的個人頁面</div>
+            <a class="icon" href="/" style="text-decoration:none;float: right;"><i class="bi bi-box-arrow-left"></i>登出</a>
+            <a class="icon" href="/home/personal/" style="text-decoration:none; float: right;position: absolute;left: 1350px;top: 20px;"><i class="bi bi-person-circle"></i>{{info[0][1]}}</a> 
+        </div>
+        <br><br><br><br><br><br>
+        <form class="form" action="/home/personal/" method="post">
             {% if info %}
-                <table>
-                    <label><br>名稱: </label>
-                    <tr><input type="text" name="name" value="{{info[0][1]}}" maxlength="10" required><br></tr>
-                    <label>手機號碼: </label>
-                    <tr><input type="text" name="phone" value="{{info[0][2]}}" maxlength="10" required><br></tr>
-                    <label>電子信箱: </label>
-                    <tr><input type="text" name="email" value="{{info[0][3]}}" maxlength="50" required><br></tr>
-                    <label>住址: </label>
-                    <tr><input type="text" name="address" value="{{info[0][5]}}" maxlength="50" required><br><br></tr>
+                <table style="border-collapse:separate; border-spacing: 0px 20px;">
+                    
+                    <tr>
+                        <td><label class="label">名稱: </label></td>
+                        <td><input class="control" type="text" name="name" value="{{info[0][1]}}" maxlength="10" style="float:left;" required><br></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><label class="label">手機號碼: </label></td>
+                        <td><input class="control" type="text" name="phone" value="{{info[0][2]}}" maxlength="10" style="float:left;" required><br></td>
+                    </tr>
+                    
+
+                    <tr>
+                        <td><label class="label">電子信箱: </label></td>
+                        <td><input class="control" type="text" name="email" value="{{info[0][3]}}" maxlength="50" style="float:left;" required></td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label">住址: </label></td>
+                        <td><input class="control" type="text" name="address" value="{{info[0][5]}}" maxlength="50" style="float:left;width: 375px;" required></td>
+                    </tr>
                 </table>
             {% endif %}
 
-            <button type="submit" name="button" value="{{info[0][0]}}" onclick="javascript:return store();">儲存更改</button>
+            <button class="submit" type="submit" name="button" value="{{info[0][0]}}" style="margin-right: 200px;" onclick="javascript:return store();">儲存更改</button>
         </form>
 
 
-        <form action="/home/personal/change/" method="post">
-            <button type="submit" name="button" value="password" >更改密碼</button>
+        <form class="change" action="/home/personal/change/" method="post">
+            <button class="submit2" type="submit" name="button" value="password" style="margin-right: 200px;" >更改密碼</button>
         </form>
 
         <script>

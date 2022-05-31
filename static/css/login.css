@@ -1,0 +1,59 @@
+body{
+    font-family: "Comic Sans MS","cursive","黑體-繁","微軟正黑體", sans-serif;
+    background-image:linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), url("/static/photo/pexels-abdullah-ghatasheh-1631677.jpg");
+    background-size: 100%;
+    width: 1536px;
+    display: block;
+    height: 700px;
+    
+}
+
+label{
+    display:table ;
+    width: 150px;
+    text-align: center;
+}
+
+
+form.login{
+    background-color: hsla(0, 0%, 100%, 0.684);
+    border-radius: 10px;
+    width: 400px;
+    color: rgb(0, 0, 0);
+    padding: 40px;
+    box-shadow: 10px 10px 25px #d0c5b870;
+    text-align: center;
+    background-size: 100%;
+    display: block;
+    align-items: center;
+    justify-content: center;
+}
+
+.login input {
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    background: none;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 20px;
+    outline: none;
+}
+
+.login input[type = "text"], .login input[type = "password"] {
+    border: 2px solid #b5b5b5;
+    width: 260px;
+}
+
+
+
+
+.login input[type = "text"]:focus, .login input[type = "password"]:focus {
+    border-color: #3a3a3a;
+    transition: 0.5s;
+}
+
+
+.error{
+    color: red;
+}
