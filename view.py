@@ -196,18 +196,21 @@ def order():
         cur.execute(data)
         rows = cur.fetchall()
         sum = 0
-        for row in rows:
-            sum += row[7]*row[8]
-        row = rows[0][10]
-        sum += 100
         status = 0
-        if(row == '訂單未完成'):
-            status = 1
+        if(rows == []):
+            return render_template('order.html',define = 0,person = person[0][1])
         else:
-            status = 0
-        print(status)
-        print(row)
-        return render_template('order.html',rows = rows,status = status,sum = sum)
+            for row in rows:
+                sum += row[7]*row[8]
+            row = rows[0][10]
+            sum += 100
+            if(row == '訂單未完成'):
+                status = 1
+            else:
+                status = 0
+            print(status)
+            print(row)
+            return render_template('order.html',rows = rows,status = status,sum = sum,define = 1)
     else:
         content = request.form.get('button')
         if(content == ' score'):
@@ -224,16 +227,21 @@ def order():
             cur.execute(data)
             rows = cur.fetchall()
             sum = 0
-            for row in rows:
-                sum += row[7]*row[8]
-            row = rows[0][10]
-            sum += 100
             status = 0
-            if(row == '訂單未完成'):
-                status = 1
+            if(rows == []):
+                return render_template('order.html',define = 0,person = person[0][1])
             else:
-                status = 0
-            return render_template('order.html',rows = rows,status = status,sum = sum)
+                for row in rows:
+                    sum += row[7]*row[8]
+                row = rows[0][10]
+                sum += 100
+                if(row == '訂單未完成'):
+                    status = 1
+                else:
+                    status = 0
+                print(status)
+                print(row)
+                return render_template('order.html',rows = rows,status = status,sum = sum,define = 1)
         elif(content == 'over'):
             conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
             person = session.get('account',None)
@@ -252,18 +260,22 @@ def order():
             cur = conn.cursor()
             cur.execute(data)
             rows = cur.fetchall()
-            print(rows)
             sum = 0
-            for row in rows:
-                sum += row[7]*row[8]
-            sum += 100
-            row = rows[0][10]
             status = 0
-            if(row == '訂單未完成'):
-                status = 1
+            if(rows == []):
+                return render_template('order.html',define = 0,person = person[0][1])
             else:
-                status = 0
-            return render_template('order.html',rows = rows,status = status,sum = sum)
+                for row in rows:
+                    sum += row[7]*row[8]
+                row = rows[0][10]
+                sum += 100
+                if(row == '訂單未完成'):
+                    status = 1
+                else:
+                    status = 0
+                print(status)
+                print(row)
+                return render_template('order.html',rows = rows,status = status,sum = sum,define = 1)
         elif(content == 'back'):
             conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
             person = session.get('account',None)
@@ -282,18 +294,22 @@ def order():
             cur = conn.cursor()
             cur.execute(data)
             rows = cur.fetchall()
-            print(rows)
             sum = 0
-            for row in rows:
-                sum += row[7]*row[8]
-            sum += 100
-            row = rows[0][10]
             status = 0
-            if(row == '訂單未完成'):
-                status = 1
+            if(rows == []):
+                return render_template('order.html',define = 0,person = person[0][1])
             else:
-                status = 0
-            return render_template('order.html',rows = rows,status = status,sum = sum)
+                for row in rows:
+                    sum += row[7]*row[8]
+                row = rows[0][10]
+                sum += 100
+                if(row == '訂單未完成'):
+                    status = 1
+                else:
+                    status = 0
+                print(status)
+                print(row)
+                return render_template('order.html',rows = rows,status = status,sum = sum,define = 1)
         else:
             conn = psycopg2.connect(database="Database_Topic", user="postgres", password="123456789", host="127.0.0.1", port="5432")
             person = session.get('account',None)
@@ -309,16 +325,21 @@ def order():
             cur.execute(data)
             rows = cur.fetchall()
             sum = 0
-            for row in rows:
-                sum += row[7]*row[8]
-            sum += 100
-            row = rows[0][10]
             status = 0
-            if(row == '訂單未完成'):
-                status = 1
+            if(rows == []):
+                return render_template('order.html',define = 0,person = person[0][1])
             else:
-                status = 0
-            return render_template('order.html',rows = rows,status = status,sum = sum)
+                for row in rows:
+                    sum += row[7]*row[8]
+                row = rows[0][10]
+                sum += 100
+                if(row == '訂單未完成'):
+                    status = 1
+                else:
+                    status = 0
+                print(status)
+                print(row)
+                return render_template('order.html',rows = rows,status = status,sum = sum,define = 1)
 
 
 @app.route('/home/personal/change/',methods=['POST','GET'])
@@ -550,7 +571,7 @@ def addproduct():
             conn.commit()
             return redirect(url_for('.seller'))
         else:
-            return render_template('new_product.html',error=True,name = account[0][1])
+            return render_template('new_product.html',error=True,name = account[0])
     else:
         account = session.get('account',None)
         return render_template('new_product.html',name = account[0][1])

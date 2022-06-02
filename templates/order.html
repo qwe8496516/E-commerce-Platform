@@ -1,71 +1,215 @@
 <html>
     <head>
         <title>訂單列表</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css" />
+        <link rel="stylesheet" href="/static/css/login.css"/>
+
         <style>
             .alert{
                 color: red;
             }
+            .form{
+				background-color: hsla(0, 0%, 100%, 0.684);
+				border-radius: 10px;
+				color: rgb(0, 0, 0);
+				padding: 40px;
+				box-shadow: 10px 10px 25px #d0c5b870;
+				text-align: center;
+				background-size: 100%;
+				display: block;
+				align-items: center;
+				justify-content: center;
+				margin: auto; 
+				width: 550px;
+				height: 420px;
+			}
+
+            .head{
+                background-color: rgba(255, 253, 252, 0.666);
+                text-align: 700px;
+                color: rgb(154, 93, 40);
+                display:inline-block;
+                font-size: 30px;
+                padding: 19px;
+                width: 1497px;
+            }
+
+            .link{
+                text-decoration: none;
+                display:inline-block;
+                font-size: large;
+            }
+
+            .title{
+                display: inline-block;
+                position:absolute;
+                left:650px;
+                top:10px;
+            }
+
+            .icon{
+                font-size: large;
+                color: rgb(154, 93, 40);
+            }
+
+            .label{
+				display: inline-block;
+				width: 115px;
+				text-align: right;
+			}
+
+			.control{
+				border-radius: 5px;
+				height: 22px;
+				border: 0;
+				margin-left: 10px;
+				float:left;
+				height:30px;
+				width: 200px;
+			}
+
+            .submit{
+				background-color: rgb(255, 255, 255);
+				width:290px;
+				height:42px;
+				border-radius: 10px;
+				display: block;
+				font-size: 15px;
+				text-align: center;
+				padding: 10px;outline: none;
+				margin: 20px auto;
+				border: none;
+                position: absolute;
+                top: 60%;
+                left: 40%;
+       		}
+
+			.submit:hover{
+				font-size: 14px;
+				font-weight: bold;
+				color: #ffffff;
+				text-decoration: none;
+				background-color: #fab496;
+			}
+
+            .submit2{
+				width:90px;
+				height:42px;
+				border-radius: 10px;
+				display: block;
+				font-size: 15px;
+				text-align: center;
+				padding: 10px;outline: none;
+				margin: 20px auto;
+				border: none;
+                position: absolute;
+                top: 60%;   
+                left: 62%;
+       		}
+
+			.submit2:hover{
+				font-size: 14px;
+				font-weight: bold;
+				color: #ffffff;
+				text-decoration: none;
+				background-color: #fab496;
+			}
+
+            .tab{
+                text-align: center;
+            }
+
+            .alert{
+                color: rgb(129, 5, 5);
+                position: absolute;
+                top: 60%;
+                left: 35%;
+                font-size: larger;
+                font-weight: bold;
+            }
+
+            .photo{
+                position: absolute;
+                top: 20%;
+                left: 39%;
+            }
+
         </style>
     </head>
 
-    <body>
-        <a href = "/home/">首頁</a>
-        <a href = "/">登出</a>
-        <h2>我的訂單</h2>
-        <a href = "/home/personal/">我的個人頁面</a>
-
-        {% if rows %}
-        <p>訂單編號: {{rows[0][0]}}</p>
-        <p>訂單完成時間: {{rows[0][11]}}</p>
-        <p>訂單狀態: {{rows[0][10]}}</p>
-        <p>運送地址: {{rows[0][9]}}</p>
-        <table id="mytable" class="producttable" width="500" border="1">
-            <th>賣家名稱</th>
-            <th>買家名稱</th>
-            <th>商品名稱</th>
-            <th>商品價格</th>
-            <th>購買數量</th>
-            {% for row in rows%}
-                <tr>
-                    <td id="{{row[0]}}" name="time">{{row[2]}}</td>
-                    <td id="{{row[0]}}" name="orderID">{{row[4]}}</td>
-                    <td id="{{row[0]}}" name="pname">{{row[6]}}</td>
-                    <td id="{{row[0]}}" name="pprice">{{row[7]}}</td>
-                    <td id="{{row[0]}}" name="pnum">{{row[8]}}</td>
-                </tr>
-            {% endfor %}
-            <td name="time"></td>
-            <td name="orderID">{{rows[0][4]}}</td>
-            <td name="pname">運費</td>
-            <td name="pprice">100</td>
-            <td name="pnum">1</td>
-        </table>
-        <p>總金額: {{sum}}</p>
-        {% endif %}
-
+    <body style="margin: 0px; background-color:#eeeeee;">
+        <div class="head">
+            <a class="icon" href="/home/" style="text-decoration:none;float: left;"><i class="bi bi-house-fill"></i>回到登入頁面</a>
+            <a class="icon" href="/home/personal/" style="text-decoration:none; float: right;position: absolute;left: 190px;top: 20px;"><i class="bi bi-person-circle"></i>我的個人頁面</a> 
+            <div class="title" style="font-weight: bold;"><i class="bi bi-box"></i>我的訂單</div>
+            <a class="icon" href="/" style="text-decoration:none;float: right;"><i class="bi bi-box-arrow-left"></i>登出</a>
+            <a class="icon" href="/home/personal/" style="text-decoration:none; float: right;position: absolute;left: 1350px;top: 20px;"><i class="bi bi-person-circle"></i>{{person}}</a> 
+        </div>
+       
+    
         
-        {% if not(rows) %}
+        {% if not(define) %}
+            <img class="photo" src="/static/photo/6ncc2g6k8mscc48g40g4skwg8qjx6io.jpg" style="width: 300px; height:300px">
             <p class="alert">趕快去買東西建立訂單拉，連個訂單都沒有辦會員幹嘛</p>
         {% endif %}
+        
+        {% if define %}
+            <div style="text-align:center;">
+                <br><br><br><br>
+                <div>
+                    {% if rows != [] %}
+                        <p>訂單編號: {{rows[0][0]}}</p>
+                        <p>訂單完成時間: {{rows[0][11]}}</p>
+                        <p>訂單狀態: {{rows[0][10]}}</p>
+                        <p>運送地址: {{rows[0][9]}}</p>
+                        <table style="text-align:center;margin:auto;">
+                            <th>賣家名稱</th>
+                            <th>買家名稱</th>
+                            <th>商品名稱</th>
+                            <th>商品價格</th>
+                            <th>購買數量</th>
+                            {% for row in rows%}
+                                <tr>
+                                    <td id="{{row[0]}}" name="time">{{row[2]}}</td>
+                                    <td id="{{row[0]}}" name="orderID">{{row[4]}}</td>
+                                    <td id="{{row[0]}}" name="pname">{{row[6]}}</td>
+                                    <td id="{{row[0]}}" name="pprice">{{row[7]}}</td>
+                                    <td id="{{row[0]}}" name="pnum">{{row[8]}}</td>
+                                </tr>
+                            {% endfor %}
+                            <td name="time"></td>
+                            <td name="orderID">{{rows[0][4]}}</td>
+                            <td name="pname">運費</td>
+                            <td name="pprice">100</td>
+                            <td name="pnum">1</td>
+                        </table>
+                        <p>總金額: {{sum}}</p>
+                    {% endif %}
+                </div>
+
+                
 
 
-        {% if status %}
-        <form action="/home/personal/order/" method="post">
-            <button type="submit" name="button" value="score" onclick="javacript:return score();">評分</button>
-        </form>
+                {% if status %}
+                <form action="/home/personal/order/" method="post">
+                    <button type="submit" name="button" value="score" onclick="javacript:return score();">評分</button>
+                </form>
+                {% endif %}
+                
+                {% if status %}
+                    <form action="/home/personal/order/" method="post">
+                        <button type="submit" name="button" value="back" onclick="javacript:return back();">退貨</button>
+                    </form>
+                {% endif %}
+
+                {% if status %}
+                    <form action="/home/personal/order/" method="post">
+                        <button type="submit" name="button" value="over" onclick="javacript:return over();">完成訂單</button>
+                    </form>
+                {% endif %}
+            </div>
         {% endif %}
         
-        {% if status %}
-            <form action="/home/personal/order/" method="post">
-                <button type="submit" name="button" value="back" onclick="javacript:return back();">退貨</button>
-            </form>
-        {% endif %}
-
-        {% if status %}
-            <form action="/home/personal/order/" method="post">
-                <button type="submit" name="button" value="over" onclick="javacript:return over();">完成訂單</button>
-            </form>
-        {% endif %}
 
         <script lang="javascript">
             function score(){
